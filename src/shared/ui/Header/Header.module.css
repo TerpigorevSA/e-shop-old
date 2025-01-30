@@ -1,0 +1,32 @@
+.header {
+    padding: 5px 40px;
+    position: sticky;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    top: 0;
+    border-bottom: 1px solid #d8dbdf;
+    /* z-index: 1; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right_wrapper {
+    display: flex;
+}
+
+/* .themeSwitcher {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */

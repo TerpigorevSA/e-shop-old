@@ -1,0 +1,271 @@
+{
+  "categoty": {
+    "photo_alt": "Категория {{name}}"
+  },
+  "operation": {
+    "amount": "{{amount, currency}}",
+    "description_undefined": "неописуемо"
+  },
+  "product": {
+    "price": "{{price, currency}}",
+    "oldPrice": "{{oldPrice, currency}}",
+    "description_undefined": "неописуемо",
+    "photo_alt": "Продукт {{name}}"
+  },
+  "OperationDetail": {
+    "edit": "Редактировать"
+  },
+  "ProductDetail": {},
+  "ProductItem": {},
+  "CartButton": {
+    "button": "В корзину"
+  },
+  "CartItem": {
+    "button": "Удалить"
+  },
+  "EditProfile": {
+    "title": "Редактирование профиля",
+    "userName": "Имя",
+    "userNamePlaceholder": "Введите имя",
+    "about": "Описание",
+    "aboutPlaceholder": "Введите описание",
+    "button": "Сохранить",
+    "errors": {
+      "userNameRequired": "Имя обязательно"
+    }
+  },
+  "ChangePassword": {
+    "title": "Смена пароля",
+    "oldPassword": "Старый пароль",
+    "oldPasswordPlaceholder": "Введите старый пароль",
+    "newPassword": "Новый пароль",
+    "newPasswordPlaceholder": "Введите новый пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "confirmPasswordPlaceholder": "Подтвердите пароль",
+    "button": "Сохранить",
+    "errors": {
+      "oldPasswordRequired": "Старый пароль обязателен",
+      "newPasswordRequired": "Новый пароль обязателен",
+      "confirmPasswordRequired": "Подтверждение пароля обязательно",
+      "confirmPasswordMatch": "Пароли не совпадают"
+    }
+  },
+  "ProfileScreen": {
+    "title": "Профиль"
+  },
+  "SignIn": {
+    "title": "Вход",
+    "email": "Email",
+    "emailPlaceholder": "Введите email",
+    "password": "Пароль",
+    "passwordPlaceholder": "Введите пароль",
+    "button": "Войти",
+    "errors": {
+      "emailRequired": "Email обязателен",
+      "invalidEmail": "Некорректный email",
+      "passwordRequired": "Пароль обязателен"
+    }
+  },
+  "SignUp": {
+    "title": "Регистрация",
+    "email": "Email",
+    "emailPlaceholder": "Введите email",
+    "password": "Пароль",
+    "passwordPlaceholder": "Введите пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "confirmPasswordPlaceholder": "Подтвердите пароль",
+    "button": "Зарегистрироваться",
+    "errors": {
+      "emailRequired": "Email обязателен",
+      "invalidEmail": "Некорректный email",
+      "passwordRequired": "Пароль обязателен",
+      "passwordLength": "Пароль должен быть не менее {{passwordLength}} символов",
+      "confirmPasswordRequired": "Подтверждение пароля обязательно",
+      "confirmPasswordMatch": "Пароли не совпадают"
+    }
+  },
+  "ProductEdit": {
+    "name": "Имя",
+    "namePlaceholder": "Введите имя",
+    "photos": "Фотографии",
+    "photo": "Фотография",
+    "photoPlaceholder": "Введите URL фотографии",
+    "addPhoto": "Добавить фото",
+    "removePhoto": "Удалить",
+    "description": "Описание",
+    "descriptionPlaceholder": "Введите описание",
+    "price": "Цена",
+    "pricePlaceholder": "Введите цену",
+    "oldPrice": "Старая цена",
+    "oldPricePlaceholder": "Введите старую цену",
+    "category": "Категория",
+    "selectCategory": "Выберите категорию",
+    "errors": {
+      "nameRequired": "Имя обязательно",
+      "photosRequired": "Укажите фотографию",
+      "photosInvalid": "Каждая ссылка должна быть корректным URL",
+      "priceRequired": "Цена обязательна",
+      "priceMin": "Цена должна быть не меньше 0",
+      "categoryRequired": "Категория обязательна",
+      "uploadError": "'Не удалось загрузить файл. Попробуйте еще раз.'"
+    },
+    "button": "Сохранить"
+  },
+  "CategoryEdit": {
+    "name": "Имя",
+    "namePlaceholder": "Введите имя",
+    "photos": "Фотографии",
+    "photo": "Фотография",
+    "photoPlaceholder": "Введите URL фотографии",
+    "addPhoto": "Добавить фото",
+    "errors": {
+      "nameRequired": "Имя обязательно",
+      "photosRequired": "Укажите фотографию",
+      "photosInvalid": "Каждая ссылка должна быть корректным URL",
+      "priceRequired": "Цена обязательна",
+      "uploadError": "'Не удалось загрузить файл. Попробуйте еще раз.'"
+    },
+    "button": "Сохранить"
+  },
+  "AuthScreen": {
+    "signOut": "Выйти"
+  },
+  "Routes": {
+    "Profile": {
+      "label": "Профиль"
+    },
+    "Auth": {
+      "label": "Авторизация",
+      "SignIn": {
+        "label": "Вход"
+      },
+      "SignUp": {
+        "label": "Регистрация"
+      },
+      "SignOut": {
+        "label": "Выход"
+      }
+    },
+    "AuthByQuery": {
+      "label": "Авторизация через RTK Query",
+      "SignIn": {
+        "label": "Вход"
+      },
+      "SignUp": {
+        "label": "Регистрация"
+      },
+      "SignOut": {
+        "label": "Выход"
+      }
+    },
+    "Catalog": {
+      "label": "Каталог"
+    },
+    "Cart": {
+      "label": "Корзина"
+    },
+    "Edit": {
+      "label": "Редактирование",
+      "Products": {
+        "label": "Товары"
+      },
+      "Categories": {
+        "label": "Категории"
+      },
+      "Orders": {
+        "label": "Заказы"
+      }
+    },
+    "Home": {
+      "label": "Главная"
+    },
+    "UserOrders": {
+      "label": "Заказы"
+    }
+  },
+  "ErrorCode": {
+    "ERR_ACCOUNT_ALREADY_EXIST": "Аккаунт с таким адресом электронной почты уже существует.",
+    "ERR_INCORRECT_EMAIL_OR_PASSWORD": "Неверный адрес электронной почты или пароль.",
+    "ERR_INCORRECT_PASSWORD": "Неверный пароль.",
+    "ERR_INVALID_PASSWORD": "Пароль не соответствует требованиям безопасности."
+  },
+  "CommonError": {
+    "UnexpectedError": "Неожиданная ошибка. Пожалуйста, повторите попытку."
+  },
+  "CartScreen": {
+    "cart": "Корзина",
+    "loading": "Загрузка...",
+    "emptyCart": "Корзина пуста",
+    "totalTitle": "Итого",
+    "total": "{{total, currency}}",
+    "clear": "Очистить",
+    "checkoutButton": "Оформить заказ"
+  },
+  "OrderItem": {
+    "createdAt": "Создан: {{createdAt, date}}",
+    "updatedAt": "Обновлен: {{updatedAt, date}}",
+    "status": "Статус: {{status}}",
+    "totalPrice": "Общая стоимость: {{totalPrice, currency}}"
+  },
+  "OrderProductItem": {
+    "price": "Цена: {{price, currency}}",
+    "quantity": "Количество: {{quantity}}"
+  },
+  "OrderStatus": {
+    "pending_confirmation": "ожидание подтверждения",
+    "processing": "обработка",
+    "packaging": "упаковка",
+    "waiting_for_delivery": "ожидание вручения",
+    "in_transit": "в пути",
+    "delivered": "доставлено",
+    "return_requested": "требуется возврат",
+    "order_cancelled": "заказ отменен"
+  },
+  "ProductFiltersSchema": {
+    "isValidCategory": "Категория отсутствуе"
+  },
+  "CommonFiltersFormSchema": {
+    "dateIntervalSchema": {
+      "LteLessGte": "Дата \"С\" должна быть меньше даты \"До\""
+    }
+  },
+  "CommonFiltersForm": {
+    "createdAt": {
+      "label": "Создан",
+      "from": "С",
+      "by": "До"
+    },
+    "updatedAt": {
+      "label": "Обновлён",
+      "from": "С",
+      "by": "До"
+    },
+    "sorting": {
+      "label": "Сортировка",
+      "byField": "По полю",
+      "field": {
+        "noSorting": "Без сортировки",
+        "id": "ID",
+        "createdAt": "Дата создания",
+        "updatedAt": "Дата обновления",
+        "name": "Имя"
+      },
+      "direction": "Направление",
+      "type": {
+        "ASC": "Возростания",
+        "DESC": "Убывания"
+      }
+    },
+    "resetButton": "Сбросить фильтры",
+    "submitButton": "Применить фильтры",
+    "errors": {
+      "validations": "Ошибки валидации"
+    }
+  },
+  "CatalogFiltersForm": {
+    "category": {
+      "label": "Категории",
+      "noCategory": "Не фильтровать"
+    }
+  }
+}

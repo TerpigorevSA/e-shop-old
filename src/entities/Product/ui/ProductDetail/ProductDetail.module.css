@@ -1,0 +1,55 @@
+.wrapper{
+    display: flex;
+    gap: 5%;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    border-color: var(--border-color);
+}
+
+.imageWrapper{
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+.image{
+    max-width: 100%;
+}
+
+.infoWrapper{
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+.title {
+    text-align: left;
+    text-indent: 5%;
+}
+
+.category {
+    text-align: left;
+    text-indent: 5%;
+}
+
+.description {
+    text-align: justify;
+}
+
+.cartWrapper{
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    gap: 5px;
+}
+
+.price {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

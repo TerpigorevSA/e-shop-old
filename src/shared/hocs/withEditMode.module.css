@@ -1,0 +1,20 @@
+.editWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* position: relative; */
+}
+
+.editButton {
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    /* border-radius: 0.5rem; */
+    cursor: pointer;
+}
+
+.editButton:active {
+    background-color: var(--active-color);
+    /* transform: scale(0.95); */
+}

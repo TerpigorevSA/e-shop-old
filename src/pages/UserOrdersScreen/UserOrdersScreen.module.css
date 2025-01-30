@@ -1,0 +1,60 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.content {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+  max-height: 100%;
+}
+
+.orders,
+.products {
+  flex: 1;
+  overflow: auto;
+}
+
+.orders {
+  border-right: 1px solid var(--border-color);
+}
+
+.products {
+  border-left: 1px solid var(--border-color);
+}
+
+.selectedOrder {
+  background-color: var(--active-color);
+  border-left: 8px solid var(--primary-color);
+  transition: background-color 0.3s ease, border-left 0.3s ease;
+}
+
+.addButton {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  /* border-radius: 0.5rem; */
+  cursor: pointer;
+}
+
+.addButton:active {
+  background-color: var(--active-color);
+  /* transform: scale(0.95); */
+}
+
+.footer {
+  padding: 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  display: flex;
+  flex-direction: row;
+}
+
+.error {
+  color: red;
+  flex-grow: 1;
+}

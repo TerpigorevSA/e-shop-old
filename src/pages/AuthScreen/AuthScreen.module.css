@@ -1,0 +1,11 @@
+.page {
+  text-align: left;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  border-color: var(--border-color);
+  padding: 20px;
+}
+
+.error {
+  color: red;
+}

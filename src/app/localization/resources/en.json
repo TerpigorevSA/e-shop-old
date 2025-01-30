@@ -1,0 +1,271 @@
+{
+  "category": {
+    "photo_alt": "Категория {{name}}"
+  },
+  "operation": {
+    "amount": "{{amount, currency}}",
+    "description_undefined": "undefined"
+  },
+  "product": {
+    "price": "{{price, currency}}",
+    "oldPrice": "{{oldPrice, currency}}",
+    "description_undefined": "undefined",
+    "photo_alt": "Product {{name}}"
+  },
+  "OperationDetail": {
+    "edit": "Edit"
+  },
+  "ProductDetail": {},
+  "ProductItem": {},
+  "CartButton": {
+    "button": "Add to cart"
+  },
+  "CartItem": {
+    "button": "Remove"
+  },
+  "EditProfile": {
+    "title": "Profile editing",
+    "userName": "Name",
+    "userNamePlaceholder": "Enter name",
+    "about": "Description",
+    "aboutPlaceholder": "Enter description",
+    "button": "Save",
+    "errors": {
+      "userNameRequired": "Name is required"
+    }
+  },
+  "ChangePassword": {
+    "title": "Password change",
+    "oldPassword": "Old password",
+    "oldPasswordPlaceholder": "Enter old password",
+    "newPassword": "New password",
+    "newPasswordPlaceholder": "Enter new password",
+    "confirmPassword": "Confirm password",
+    "confirmPasswordPlaceholder": "Confirm password",
+    "button": "Save",
+    "errors": {
+      "oldPasswordRequired": "Old password is required",
+      "newPasswordRequired": "New password is required",
+      "confirmPasswordRequired": "Password confirmation is required",
+      "confirmPasswordMatch": "Passwords do not match"
+    }
+  },
+  "ProfileScreen": {
+    "title": "Profile"
+  },
+  "SignIn": {
+    "title": "Sign In",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "button": "Log In",
+    "errors": {
+      "emailRequired": "Email is required",
+      "invalidEmail": "Invalid email",
+      "passwordRequired": "Password is required"
+    }
+  },
+  "SignUp": {
+    "title": "Sign Up",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "button": "Register",
+    "errors": {
+      "emailRequired": "Email is required",
+      "invalidEmail": "Invalid email",
+      "passwordRequired": "Password is required",
+      "passwordLength": "Password must be at least {{passwordLength}} characters long",
+      "confirmPasswordRequired": "Password confirmation is required",
+      "confirmPasswordMatch": "Passwords do not match"
+    }
+  },
+  "ProductEdit": {
+    "name": "Name",
+    "namePlaceholder": "Enter name",
+    "photos": "Photos",
+    "photo": "Photo",
+    "photoPlaceholder": "Enter photo URL",
+    "addPhoto": "Add photo",
+    "removePhoto": "Remove",
+    "description": "Description",
+    "descriptionPlaceholder": "Enter description",
+    "price": "Price",
+    "pricePlaceholder": "Enter price",
+    "oldPrice": "Old Price",
+    "oldPricePlaceholder": "Enter old price",
+    "category": "Category",
+    "selectCategory": "Select category",
+    "errors": {
+      "nameRequired": "Name is required",
+      "photosRequired": "Photo is required",
+      "photosInvalid": "Each URL must be valid",
+      "priceRequired": "Price is required",
+      "priceMin": "Price must be at least 0",
+      "categoryRequired": "Category is required",
+      "uploadError": "Failed to upload file. Try again."
+    },
+    "button": "Save"
+  },
+  "CategoryEdit": {
+    "name": "Name",
+    "namePlaceholder": "Enter name",
+    "photos": "Photos",
+    "photo": "Photo",
+    "photoPlaceholder": "Enter photo URL",
+    "addPhoto": "Add photo",
+    "errors": {
+      "nameRequired": "Name is required",
+      "photosRequired": "Photo is required",
+      "photosInvalid": "Each URL must be valid",
+      "priceRequired": "Price is required",
+      "uploadError": "Failed to upload file. Try again."
+    },
+    "button": "Save"
+  },
+  "AuthScreen": {
+    "signOut": "Sign Out"
+  },
+  "Routes": {
+    "Profile": {
+      "label": "Profile"
+    },
+    "Auth": {
+      "label": "Authorization",
+      "SignIn": {
+        "label": "Sign In"
+      },
+      "SignUp": {
+        "label": "Sign Up"
+      },
+      "SignOut": {
+        "label": "Sign Out"
+      }
+    },
+    "AuthByQuery": {
+      "label": "Authorization by RTK Query",
+      "SignIn": {
+        "label": "Sign In"
+      },
+      "SignUp": {
+        "label": "Sign Up"
+      },
+      "SignOut": {
+        "label": "Sign Out"
+      }
+    },
+    "Catalog": {
+      "label": "Catalog"
+    },
+    "Cart": {
+      "label": "Cart"
+    },
+    "Edit": {
+      "label": "Edit",
+      "Products": {
+        "label": "Products"
+      },
+      "Categories": {
+        "label": "Categories"
+      },
+      "Orders": {
+        "label": "Orders"
+      }
+    },
+    "Home": {
+      "label": "Home"
+    },
+    "UserOrders": {
+      "label": "Orders"
+    }
+  },
+  "ErrorCode": {
+    "ERR_ACCOUNT_ALREADY_EXIST": "An account with this email address already exists.",
+    "ERR_INCORRECT_EMAIL_OR_PASSWORD": "Incorrect email or password.",
+    "ERR_INCORRECT_PASSWORD": "Incorrect password.",
+    "ERR_INVALID_PASSWORD": "The password does not meet security requirements."
+  },
+  "CommonError": {
+    "UnexpectedError": "Unexpected error. Please try again."
+  },
+  "CartScreen": {
+    "cart": "Cart",
+    "loading": "Loading...",
+    "emptyCart": "Cart is empty",
+    "totalTitle": "Total",
+    "total": "{{total, currency}}",
+    "clear": "Clear",
+    "checkoutButton": "Checkout"
+  },
+  "OrderItem": {
+    "createdAt": "Created at: {{createdAt, date}}",
+    "updatedAt": "Updated at: {{updatedAt, date}}",
+    "status": "Status: {{status}}",
+    "totalPrice": "Total Price: {{totalPrice, currency}}"
+  },
+  "OrderProductItem": {
+    "price": "Price: {{price, currency}}",
+    "quantity": "Quantity: {{quantity}}"
+  },
+  "OrderStatus": {
+    "pending_confirmation": " pending confirmation",
+    "processing": " processing",
+    "packaging": " packaging",
+    "waiting_for_delivery": " waiting for delivery",
+    "in_transit": " in transit",
+    "delivered": " delivered",
+    "return_requested": " return requested",
+    "order_cancelled": " order cancelled"
+  },
+  "ProductFiltersSchema": {
+    "isValidCategory": "Category is missing"
+  },
+  "CommonFiltersFormSchema": {
+    "dateIntervalSchema": {
+      "LteLessGte": "The 'From' date must be earlier than the 'To' date"
+    }
+  },
+  "CommonFiltersForm": {
+    "createdAt": {
+      "label": "Created",
+      "from": "From",
+      "by": "To"
+    },
+    "updatedAt": {
+      "label": "Updated",
+      "from": "From",
+      "by": "To"
+    },
+    "sorting": {
+      "label": "Sorting",
+      "byField": "By field",
+      "field": {
+        "noSorting": "No sorting",
+        "id": "ID",
+        "createdAt": "Creation date",
+        "updatedAt": "Update date",
+        "name": "Name"
+      },
+      "direction": "Direction",
+      "type": {
+        "ASC": "Ascending",
+        "DESC": "Descending"
+      }
+    },
+    "resetButton": "Reset filters",
+    "submitButton": "Apply filters",
+    "errors": {
+      "validations": "Validation errors"
+    }
+  },
+  "CatalogFiltersForm": {
+    "category": {
+      "label": "Category",
+      "noCategory": "Do not filter"
+    }
+  }
+}

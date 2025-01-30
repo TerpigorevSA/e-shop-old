@@ -1,0 +1,45 @@
+.item {
+    /* display: flex;
+    flex-wrap: wrap;
+    justify-content: center; */
+    margin-bottom: 10px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.content {
+    flex-grow: 1;
+    overflow: auto;
+}
+
+.addButton {
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    /* border-radius: 0.5rem; */
+    cursor: pointer;
+}
+
+.addButton:active {
+    background-color: var(--active-color);
+    /* transform: scale(0.95); */
+}
+
+.footer {
+    padding: 5px;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: row;
+  }
+  
+.error {
+  color: red;
+  flex-grow: 1;
+}

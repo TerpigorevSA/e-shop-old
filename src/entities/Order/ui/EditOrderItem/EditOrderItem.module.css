@@ -1,0 +1,44 @@
+.orderItem {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .label {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .value {
+    flex: 1;
+    text-align: right;
+    min-width: 100px;
+  }
+
+  .statusSelect {
+    /* color: var(--text-color);
+          background-color: var(--background-color);
+          border-color: var(--border-color); */
+    /* width: 100%;
+    padding: 8px;
+    margin-bottom: 10px; */
+    /* border: 1px solid; */
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--text-color);
+    background-color: var(--background-color);
+  }
+  

@@ -1,0 +1,51 @@
+.form {
+    color: var(--text-color);
+    background-color: var(--background-color);
+    border-color: var(--border-color);
+    padding: 20px;
+}
+
+.label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.error {
+    color: red;
+}
+
+.input,
+.textarea,
+.select {
+  /* border-color: var(--border-color); */
+    color: var(--text-color);
+    background-color: var(--background-color);
+    background: transparent;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid;
+}
+
+.button {
+    /* color: var(--text-color);
+      background-color: lightblue; */
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.customFileButton {
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+
+.customFileButton:active {
+    background: var(--active-color);
+    /* outline: none; */
+}
