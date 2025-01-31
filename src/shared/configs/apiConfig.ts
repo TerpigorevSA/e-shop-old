@@ -21,7 +21,7 @@ export const baseQueryWithErrorHandler: BaseQueryFn<string | FetchArgs, unknown,
   extraOptions
 ) => {
   const result = await customFetchBaseQuery(args, api, extraOptions);
-  console.error('baseQueryWithErrorHandler', result);
+  // console.error('baseQueryWithErrorHandler', result);
   // if (result.error) {
   //   const errorData = result.error.data as ServerError[];
   //   console.error('API Error:', errorData);

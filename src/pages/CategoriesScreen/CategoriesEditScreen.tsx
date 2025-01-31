@@ -7,7 +7,7 @@ import CategoryItem from '../../entities/Category/ui/CategoryItem/CategoryItem';
 import CategoryEditForm from '../../features/forms/CategoryEditForm/CategoryEditForm';
 import withEditMode from '../../shared/hocs/withEditMode';
 import Modal from '../../shared/ui/Modal/Modal';
-import { Category, MutateCategoryBody, Pagination } from '../../shared/types/serverTypes';
+import { CategoriesFilters, Category, MutateCategoryBody, Pagination } from '../../shared/types/serverTypes';
 import Button from '../../shared/ui/Button/Button';
 import ComponentFetchList from '../../shared/ui/ComponentFetchList/ComponentFetchList';
 import { useTranslation } from 'react-i18next';
@@ -25,9 +25,11 @@ const CategoriesEditScreen: React.FC = () => {
   const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
 
-  const [pagination, setPagination] = useState<Pagination>({ pageSize: 3, pageNumber: 1 });
+  const [pagination, setPagination] = useState<Pagination>({ pageSize: 5, pageNumber: 1 });
   const [items, setItems] = useState<Category[]>([]);
+  const [currentFilters, setCurrentFilters] = useState<CategoriesFilters>({});
   const firstRender = useRef(true);
+  const [reset, setReset] = useState(true);
 
   const {
     data: ResponseData,
@@ -36,18 +38,29 @@ const CategoriesEditScreen: React.FC = () => {
     isError,
     isSuccess,
     error,
-  } = useGetCategoriesQuery({ pagination });
+  } = useGetCategoriesQuery({ ...currentFilters, pagination });
 
   const data = ResponseData?.data;
   const serverPagination = ResponseData?.pagination;
-  // console.log(ResponseData);
+  console.log(ResponseData, pagination, currentFilters);
   useEffect(() => {
-    if (data && (serverPagination.pageNumber !== 1 || firstRender.current)) {
-      // console.log(pagination.pageNumber, serverPagination.pageNumber, firstRender.current, data);
+    console.log('useEffect', ResponseData, pagination, currentFilters);
+    if (data && !isFetching && (serverPagination.pageNumber !== 1 || firstRender.current)) {
       setItems((prevItems) => [...prevItems, ...data]);
       firstRender.current = false;
     }
-  }, [data, serverPagination]);
+  }, [data, serverPagination, reset, isFetching]);
+
+  const handleFiltersChange = useCallback(
+    (filters: CategoriesFilters) => {
+      setCurrentFilters(filters);
+      setPagination((prev) => ({ ...prev, pageNumber: 1 }));
+      setItems((prev) => []);
+      firstRender.current = true;
+      setReset((prev) => !prev);
+    },
+    [dispatch]
+  );
 
   const handleFetchCategories = useCallback(() => {
     if (serverPagination && items.length < serverPagination.total && !isFetching) {
@@ -66,11 +79,9 @@ const CategoriesEditScreen: React.FC = () => {
         createCategory(data).then((res) => {
           console.log(JSON.stringify(res));
         });
-        // dispatch(addCategory(data));
         return;
       }
       if (id) {
-        // updateCategory({ id, body: data })
         updateCategory({ id: '9b7d0c31-2ed4-4f5a-8b3d-ee0422ce152b', body: data })
           .then((res) => {
             /* nothing*/
@@ -83,31 +94,10 @@ const CategoriesEditScreen: React.FC = () => {
             /* nothing*/
             console.error(JSON.stringify(error));
           });
-        // dispatch(updateCategory({ id, body: data }));
         return;
       }
     },
     [dispatch, items]
-  );
-
-  // const handleFetchCategories = useCallback(() => {
-  //   if (
-  //     pagination.pageNumber !== pageTotal &&
-  //     pagination.pageNumber !== 0 &&
-  //     categorieState.status !== 'loading' &&
-  //     categorieState.status !== 'failed'
-  //   ) {
-  //     dispatch(getPartCategories({ pagination: { pageSize: 10, pageNumber: pagination.pageNumber + 1 } }));
-  //   }
-  // }, [dispatch, pagination, pageTotal, categorieState.status]);
-
-  const renderCallback = useCallback(
-    (item: Category) => (
-      <div className={cn(styles.item)} key={item.id}>
-        <EditCategoryItem onEdit={() => setEditingCategory(item)} name={item.name} photo={item.photo} />
-      </div>
-    ),
-    []
   );
 
   const handleAddClick = useCallback(() => {
@@ -118,26 +108,17 @@ const CategoriesEditScreen: React.FC = () => {
     } as Category);
   }, []);
 
+  const renderCallback = useCallback(
+    (item: Category) => (
+      <div className={cn(styles.item)} key={item.id}>
+        <EditCategoryItem onEdit={() => setEditingCategory(item)} name={item.name} photo={item.photo} />
+      </div>
+    ),
+    []
+  );
+
   return (
     <>
-      {/* <div className={styles.wrapper}>
-        <div>
-          <Button
-            className={styles.addButton}
-            lable="Add category"
-            onClick={handleAddClick}
-            disabled={!isSuccess}
-          />
-        </div>
-        <div className={styles.content}>
-          <ComponentFetchList items={items} doFetch={handleFetchCategories} render={renderCallback} oneObserve={true} />
-        </div>
-        {error && (
-          <div className={styles.footer}>
-            <div className={styles.error}>{(error as string[]).map((str) => t(str)).join('\n')}</div>
-          </div>
-        )}
-      </div> */}
       <PageLayout
         header={
           <Button
@@ -149,20 +130,16 @@ const CategoriesEditScreen: React.FC = () => {
         }
         sidebar={
           <>
-            <CategoriesFiltersForm
-              initialFilters={{}}
-              onChange={(filters) => {
-                /* nothing */
-              }}
-            />
+            <CategoriesFiltersForm initialFilters={{}} onChange={handleFiltersChange} />
           </>
         }
         footer={
-          error && (
+          JSON.stringify(currentFilters) ||
+          (error && (
             <div className={styles.footer}>
               <div className={styles.error}>{(error as string[]).map((str) => t(str)).join('\n')}</div>
             </div>
-          )
+          ))
         }
       >
         <ComponentFetchList items={items} doFetch={handleFetchCategories} render={renderCallback} oneObserve={true} />
