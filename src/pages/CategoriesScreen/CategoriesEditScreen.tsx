@@ -7,13 +7,17 @@ import CategoryItem from '../../entities/Category/ui/CategoryItem/CategoryItem';
 import CategoryEditForm from '../../features/forms/CategoryEditForm/CategoryEditForm';
 import withEditMode from '../../shared/hocs/withEditMode';
 import Modal from '../../shared/ui/Modal/Modal';
-import { addCategory } from '../../entities/Category/model/thunks';
 import { Category, MutateCategoryBody, Pagination } from '../../shared/types/serverTypes';
 import Button from '../../shared/ui/Button/Button';
 import ComponentFetchList from '../../shared/ui/ComponentFetchList/ComponentFetchList';
 import { useTranslation } from 'react-i18next';
-import { useGetCategoriesQuery, useUpdateCategoryMutation } from '../../entities/Category/api/categoryApi';
+import {
+  useCreateCategoryMutation,
+  useGetCategoriesQuery,
+  useUpdateCategoryMutation,
+} from '../../entities/Category/api/categoryApi';
 import PageLayout from '../../shared/ui/PageLayout/PageLayout';
+import CategoriesFiltersForm from './CategoriesFilterForm/CategoriesFilterForm';
 
 const EditCategoryItem = withEditMode(CategoryItem);
 
@@ -36,10 +40,10 @@ const CategoriesEditScreen: React.FC = () => {
 
   const data = ResponseData?.data;
   const serverPagination = ResponseData?.pagination;
-  console.log(ResponseData);
+  // console.log(ResponseData);
   useEffect(() => {
     if (data && (serverPagination.pageNumber !== 1 || firstRender.current)) {
-      console.log(pagination.pageNumber, serverPagination.pageNumber, firstRender.current, data);
+      // console.log(pagination.pageNumber, serverPagination.pageNumber, firstRender.current, data);
       setItems((prevItems) => [...prevItems, ...data]);
       firstRender.current = false;
     }
@@ -54,20 +58,30 @@ const CategoriesEditScreen: React.FC = () => {
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
 
   const [updateCategory] = useUpdateCategoryMutation();
+  const [createCategory] = useCreateCategoryMutation();
 
   const handleEditCategory = useCallback(
     (id: string, data: MutateCategoryBody) => {
       if (!id) {
-        dispatch(addCategory(data));
+        createCategory(data).then((res) => {
+          console.log(JSON.stringify(res));
+        });
+        // dispatch(addCategory(data));
         return;
       }
       if (id) {
-        updateCategory({ id, body: data })
+        // updateCategory({ id, body: data })
+        updateCategory({ id: '9b7d0c31-2ed4-4f5a-8b3d-ee0422ce152b', body: data })
           .then((res) => {
             /* nothing*/
+            if (res.data) {
+              setItems((prev) => prev.map((item) => (item.id === res.data.id ? res.data : item)));
+            }
+            console.log(JSON.stringify(res));
           })
           .catch((error) => {
             /* nothing*/
+            console.error(JSON.stringify(error));
           });
         // dispatch(updateCategory({ id, body: data }));
         return;
@@ -133,7 +147,16 @@ const CategoriesEditScreen: React.FC = () => {
             disabled={!isSuccess}
           />
         }
-        sidebar={<></>}
+        sidebar={
+          <>
+            <CategoriesFiltersForm
+              initialFilters={{}}
+              onChange={(filters) => {
+                /* nothing */
+              }}
+            />
+          </>
+        }
         footer={
           error && (
             <div className={styles.footer}>

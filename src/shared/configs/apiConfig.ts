@@ -1,8 +1,7 @@
-import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BaseQueryFn, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { getAccessToken } from '../lib/localStorage';
-import { ServerError } from '../types/serverTypes';
 
-const baseQuery = fetchBaseQuery({
+const customFetchBaseQuery = fetchBaseQuery({
   baseUrl: 'https://19429ba06ff2.vps.myjino.ru/api',
   // baseUrl: 'https://localhost:3000',
   prepareHeaders: (headers) => {
@@ -15,14 +14,19 @@ const baseQuery = fetchBaseQuery({
   mode: 'cors',
 });
 
-export const baseQueryWithErrorHandler = async (args: any, api: any, extraOptions: any) => {
-  const result = await baseQuery(args, api, extraOptions);
-
-  if (result.error) {
-    const errorData = result.error.data as ServerError[];
-    console.error('API Error:', errorData);
-    throw errorData; // Централизованный throw для обработки в компонентах
-  }
+// export const baseQueryWithErrorHandler: BaseQueryFn<string|FetchArgs,unknown,FetchBaseQueryError&{error:string[]}> = async (args, api, extraOptions) => {
+export const baseQueryWithErrorHandler: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
+  args,
+  api,
+  extraOptions
+) => {
+  const result = await customFetchBaseQuery(args, api, extraOptions);
+  console.error('baseQueryWithErrorHandler', result);
+  // if (result.error) {
+  //   const errorData = result.error.data as ServerError[];
+  //   console.error('API Error:', errorData);
+  //   return {...result, error:handleApiError(result.error)}; //throw errorData; // Централизованный throw для обработки в компонентах
+  // }
 
   return result;
 };

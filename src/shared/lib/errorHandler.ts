@@ -1,13 +1,23 @@
-import { ServerError } from '../types/serverTypes';
+import { ServerErrors } from '../types/serverTypes';
+import { getLocaleErrorMessage } from './errorsParsing';
 
-export const handleApiError = (error: ServerError[] | any) => {
-  if (Array.isArray(error)) {
-    error.forEach((err) => {
-      console.error(`Error: ${err.message} (Field: ${err.fieldName || 'common'})`);
-      alert(`Error: ${err.message}`);
+export const handleApiError = (error: unknown): string[] => {
+  if (isServerError(error)) {
+    error.errors.forEach((err) => {
+      console.error(`Error [${err.extensions.code}]: ${err.message} ${err?.fieldName || 'common'}`);
+      if (err.fieldName) {
+        console.error(`Field: ${err.fieldName}`);
+      }
     });
-  } else {
-    console.error('Unknown error', error);
-    alert(`Error. Try later`);
+    return error.errors.map((error) => getLocaleErrorMessage(error));
   }
+
+  console.error('Unhandled error:', error);
+  return [`Unknown error: ${error}`];
+};
+
+const isServerError = (error: unknown): error is ServerErrors => {
+  return (
+    typeof error === 'object' && error !== null && 'errors' in error && Array.isArray((error as ServerErrors).errors)
+  );
 };
