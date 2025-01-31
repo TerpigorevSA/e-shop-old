@@ -5,102 +5,84 @@ import ProductItem from '../../entities/Product/ui/ProductItem/ProductItem';
 import ComponentFetchList from '../../shared/ui/ComponentFetchList/ComponentFetchList';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../app/store/store';
-import { Product, ProductsFilters } from '../../shared/types/serverTypes';
+import { Category, Pagination, Product, ProductsFilters } from '../../shared/types/serverTypes';
 import { setQuantity } from '../../features/Cart/model/slice';
 import PageLayout from '../../shared/ui/PageLayout/PageLayout';
 import CatalogFiltersForm from './CatalogFiltersForm/CatalogFiltersForm';
 import { useGetProductsQuery } from '../../entities/Product/api/productApi';
-import { getPartCategories } from 'src/entities/Category/model/thunks';
+import { useGetCategoriesQuery } from '../../entities/Category/api/categoryApi';
+import { useTranslation } from 'react-i18next';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 5;
 
 const CatalogScreen: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
   // for categoties only
-  const categoriesEmpty = useSelector((state: RootState) => state.categories.categories).length === 0;
-  const firstRender = useRef(true);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const firstCategoryRender = useRef(true);
+  const {
+    data: categoryResponseData,
+    isFetching: isFetchingCategories,
+    isSuccess: isSuccessCategories,
+  } = useGetCategoriesQuery(null, {
+    skip: !firstCategoryRender.current,
+  });
 
-  useEffect(() => {
-    if (categoriesEmpty && firstRender.current) {
-      dispatch(getPartCategories(null));
-    }
-    firstRender.current = false;
-  }, []);
-  const categories = useSelector((state: RootState) => state.categories.categories);
-  const categoriesState = useSelector((state: RootState) => state.categories.status);
-  // for categoties only
-  const [currentFilters, setCurrentFilters] = useState<ProductsFilters>({});
-
-  // const { products: items, status, pagination, categories } = useSelector((state: RootState) => state.products);
-
-  const currentCart = useSelector((state: RootState) => state.cart.currentCartEntries);
-
-  const loadedPages = useRef<number[]>([]);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [products, setProducts] = useState<Product[]>([]);
-  const { data, isFetching, isLoading, isError, refetch } = useGetProductsQuery(
-    { ...currentFilters, pagination: { pageSize: PAGE_SIZE, pageNumber: pageNumber } },
-    {
-      // Пропуск для 0 и для уже загруженных (первую страницу может повторно, из-за React.StrickMode)
-      skip: pageNumber === 0 || loadedPages.current.includes(pageNumber),
-    }
-  );
-
-  const handleFetchProducts = useCallback(() => {
-    console.log('handleFetchProducts');
-    if (!hasMore || isFetching) return;
-    setPageNumber((prev) => {
-      return prev + 1;
-    });
-  }, [hasMore, isFetching]);
-
-  useEffect(() => {
-    if (isLoading && isFetching) {
-      setProducts([]);
-    }
-  }, [isFetching, isLoading]);
+  const categoryData = categoryResponseData?.data;
+  const categoryServerPagination = categoryResponseData?.pagination;
 
   useEffect(() => {
     if (
-      data &&
-      data.data.length > 0 &&
-      !loadedPages.current.includes(pageNumber) &&
-      data.pagination.pageNumber === pageNumber
+      categoryData &&
+      !isFetchingCategories &&
+      (categoryServerPagination.pageNumber !== 1 || firstCategoryRender.current)
     ) {
-      loadedPages.current.push(pageNumber);
-      setProducts((prev) => [...prev, ...data.data]);
-    } else if (data && data.data.length < PAGE_SIZE) {
-      setHasMore(false);
+      setCategories((prev) => [...prev, ...categoryData]);
+      firstCategoryRender.current = false;
     }
-  }, [data, pageNumber]);
+  }, [categoryData, categoryServerPagination, isFetchingCategories]);
+  // for categoties only
 
-  // const handleFetchProducts = useCallback(() => {
-  //   console.log('handleFetchProducts')
-  //   if (status === 'succeeded' && pagination.pageNumber < Math.ceil(pagination.total / pagination.pageSize)) {
-  //     console.log('handleFetchProducts', pagination);
-  //     dispatch(
-  //       getPartProducts({
-  //         ...currentFilters,
-  //         pagination: { pageSize: 10, pageNumber: pagination.pageNumber + 1 },
-  //       })
-  //     );
-  //   }
-  // }, [status, pagination, dispatch]);
+  const [pagination, setPagination] = useState<Pagination>({ pageSize: PAGE_SIZE, pageNumber: 1 });
+  const [items, setItems] = useState<Product[]>([]);
+  const [currentFilters, setCurrentFilters] = useState<ProductsFilters>({});
+  const firstRender = useRef(true);
+  const [reset, setReset] = useState(true);
 
-  const handleFiltersChange = useCallback(
-    (filters: ProductsFilters) => {
-      setCurrentFilters(filters);
-      loadedPages.current = [];
-      setPageNumber(1);
-      setHasMore(true);
-      setProducts([]);
-      // setLocalItems([]);
-      // dispatch(clearCurrentProducts());
-      // firstRender.current = true;
-    },
-    [dispatch]
-  );
+  const {
+    data: ResponseData,
+    isFetching,
+    isLoading,
+    isError,
+    isSuccess,
+    error,
+  } = useGetProductsQuery({ ...currentFilters, pagination });
+
+  const data = ResponseData?.data;
+  const serverPagination = ResponseData?.pagination;
+  useEffect(() => {
+    if (data && !isFetching && (serverPagination.pageNumber !== 1 || firstRender.current)) {
+      setItems((prevItems) => [...prevItems, ...data]);
+      firstRender.current = false;
+    }
+  }, [data, serverPagination, reset, isFetching]);
+
+  const handleFiltersChange = useCallback((filters: ProductsFilters) => {
+    setCurrentFilters(filters);
+    setPagination((prev) => ({ ...prev, pageNumber: 1 }));
+    setItems((prev) => []);
+    firstRender.current = true;
+    setReset((prev) => !prev);
+  }, []);
+
+  const handleFetchProducts = useCallback(() => {
+    if (serverPagination && items.length < serverPagination.total && !isFetching) {
+      setPagination((prev) => ({ ...prev, pageNumber: prev.pageNumber + 1 }));
+    }
+  }, [serverPagination, items.length, isFetching]);
+
+  const currentCart = useSelector((state: RootState) => state.cart.currentCartEntries);
 
   const handleSetQuantity = useCallback(
     (product: Product, quantity: number) => {
@@ -127,10 +109,21 @@ const CatalogScreen: React.FC = () => {
 
   return (
     <PageLayout
-      footer={<></>}
+      footer={
+        <>
+          (
+          {error && (
+            <div className={styles.footer}>
+              {/* <div className={styles.error}>{JSON.stringify(error)}</div> */}
+              <div className={styles.error}>{(error as string[]).map((str) => t(str)).join('\n')}</div>
+            </div>
+          )}
+          )
+        </>
+      }
       header={<></>}
       sidebar={
-        categoriesState === 'succeeded' ? (
+        isSuccessCategories ? (
           <>
             <CatalogFiltersForm
               initialFilters={currentFilters}
@@ -144,13 +137,7 @@ const CatalogScreen: React.FC = () => {
       }
     >
       <div className={cn(styles.list)}>
-        <ComponentFetchList
-          items={products}
-          doFetch={handleFetchProducts}
-          render={renderCallback}
-          oneObserve={true}
-          // needObserve={pagination.pageNumber < Math.ceil(pagination.total / pagination.pageSize)}
-        />
+        <ComponentFetchList items={items} doFetch={handleFetchProducts} render={renderCallback} oneObserve={true} />
       </div>
     </PageLayout>
   );

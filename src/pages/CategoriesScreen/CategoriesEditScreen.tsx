@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../app/store/store';
 import cn from 'clsx';
 import styles from './CategoriesEditScreen.module.css';
 import CategoryItem from '../../entities/Category/ui/CategoryItem/CategoryItem';
@@ -20,12 +18,12 @@ import PageLayout from '../../shared/ui/PageLayout/PageLayout';
 import CategoriesFiltersForm from './CategoriesFilterForm/CategoriesFilterForm';
 
 const EditCategoryItem = withEditMode(CategoryItem);
+const PAGE_SIZE = 10;
 
 const CategoriesEditScreen: React.FC = () => {
   const { t } = useTranslation();
-  const dispatch: AppDispatch = useDispatch();
 
-  const [pagination, setPagination] = useState<Pagination>({ pageSize: 5, pageNumber: 1 });
+  const [pagination, setPagination] = useState<Pagination>({ pageSize: PAGE_SIZE, pageNumber: 1 });
   const [items, setItems] = useState<Category[]>([]);
   const [currentFilters, setCurrentFilters] = useState<CategoriesFilters>({});
   const firstRender = useRef(true);
@@ -42,25 +40,22 @@ const CategoriesEditScreen: React.FC = () => {
 
   const data = ResponseData?.data;
   const serverPagination = ResponseData?.pagination;
-  console.log(ResponseData, pagination, currentFilters);
+  // console.log(ResponseData, pagination, currentFilters);
   useEffect(() => {
-    console.log('useEffect', ResponseData, pagination, currentFilters);
+    // console.log('useEffect', ResponseData, pagination, currentFilters);
     if (data && !isFetching && (serverPagination.pageNumber !== 1 || firstRender.current)) {
       setItems((prevItems) => [...prevItems, ...data]);
       firstRender.current = false;
     }
   }, [data, serverPagination, reset, isFetching]);
 
-  const handleFiltersChange = useCallback(
-    (filters: CategoriesFilters) => {
-      setCurrentFilters(filters);
-      setPagination((prev) => ({ ...prev, pageNumber: 1 }));
-      setItems((prev) => []);
-      firstRender.current = true;
-      setReset((prev) => !prev);
-    },
-    [dispatch]
-  );
+  const handleFiltersChange = useCallback((filters: CategoriesFilters) => {
+    setCurrentFilters(filters);
+    setPagination((prev) => ({ ...prev, pageNumber: 1 }));
+    setItems((prev) => []);
+    firstRender.current = true;
+    setReset((prev) => !prev);
+  }, []);
 
   const handleFetchCategories = useCallback(() => {
     if (serverPagination && items.length < serverPagination.total && !isFetching) {
@@ -97,7 +92,7 @@ const CategoriesEditScreen: React.FC = () => {
         return;
       }
     },
-    [dispatch, items]
+    [items]
   );
 
   const handleAddClick = useCallback(() => {

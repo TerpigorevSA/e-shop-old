@@ -1,6 +1,6 @@
 import { CommonFiltersForm } from 'src/features/forms/CommonFiltersForm/CommonFiltersForm';
 import { Category, ProductsFilters } from 'src/shared/types/serverTypes';
-import React, { useState } from 'react';
+import React from 'react';
 import cn from 'clsx';
 import styles from './CatalogFiltersForm.module.css';
 // import { productFilterSchema } from 'src/entities/Product/model/ProductFilterSchema';
@@ -19,7 +19,8 @@ const CatalogFiltersForm = ({ initialFilters, onChange, categories }: CatalogFil
   };
   const { t } = useTranslation();
 
-  const [productFilterSchema] = useState(createProductFiltersSchema(categories.map((category) => category.id)));
+  // const [productFilterSchema] = useState(createProductFiltersSchema(categories.map((category) => category.id)));
+  const productFilterSchema = createProductFiltersSchema(categories?.map((category) => category.id));
 
   return (
     <CommonFiltersForm initialFilters={initialFilters} childrenSchema={productFilterSchema} onChange={onChange}>
