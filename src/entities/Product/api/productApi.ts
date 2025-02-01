@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithErrorHandler } from 'src/shared/configs/apiConfig';
 import { stringifyObject } from 'src/shared/lib/stringifyObjectHelper';
-import { GetPageResult, Product, ProductsFilters } from 'src/shared/types/serverTypes';
+import { GetPageResult, MutateProductBody, MutateRequest, Product, ProductsFilters } from 'src/shared/types/serverTypes';
 
 export const productApi = createApi({
   reducerPath: 'productApi',
@@ -14,7 +14,23 @@ export const productApi = createApi({
       providesTags: ['product'],
       // keepUnusedDataFor: 10,
     }),
+    updateProduct: builder.mutation<Product, MutateRequest<MutateProductBody>>({
+      query: (updateProduct) => ({
+        url: `/products/${updateProduct.id}`,
+        method: 'PUT',
+        body: updateProduct.body,
+      }),
+      // invalidatesTags: ['product'],
+    }),
+    createProduct: builder.mutation<Product, MutateProductBody>({
+      query: (newProduct) => ({
+        url: `/products/`,
+        method: 'POST',
+        body: newProduct,
+      }),
+      // invalidatesTags: ['product'],
+    }),
   }),
 });
 
-export const { useGetProductsQuery } = productApi;
+export const { useGetProductsQuery, useUpdateProductMutation, useCreateProductMutation } = productApi;

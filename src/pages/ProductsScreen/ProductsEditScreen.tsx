@@ -3,126 +3,195 @@ import cn from 'clsx';
 import styles from './ProductsEditScreen.module.css';
 import ProductItem from '../../entities/Product/ui/ProductItem/ProductItem';
 import ComponentFetchList from '../../shared/ui/ComponentFetchList/ComponentFetchList';
-import withEditMode from '../../shared/hocs/withEditMode';
-import Modal from '../../shared/ui/Modal/Modal';
-import ProductEditForm from '../../features/forms/ProductEditForm/ProductEditForm';
-import { updateProduct, getPartProducts, addProduct } from '../../features/Products/model/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../app/store/store';
-import Button from 'src/shared/ui/Button/Button';
-import { MutateProductBody, Product } from '../../shared/types/serverTypes';
-import { getCategories } from '../../entities/Category/model/thunks';
+import { Category, MutateProductBody, Pagination, Product, ProductsFilters } from '../../shared/types/serverTypes';
+import PageLayout from '../../shared/ui/PageLayout/PageLayout';
+import { useCreateProductMutation, useGetProductsQuery, useUpdateProductMutation } from '../../entities/Product/api/productApi';
+import { useGetCategoriesQuery } from '../../entities/Category/api/categoryApi';
 import { useTranslation } from 'react-i18next';
+import withEditMode from '../../shared/hocs/withEditMode';
+import Button from '../../shared/ui/Button/Button';
+import ProductsFiltersForm from './ProductsFiltersForm/ProductsFiltersForm';
+import Modal from '../../shared/ui/Modal/Modal';
+import ProductEditForm from '../../features/forms/ProductEditForm/ProductEditForm';
 
 const EditProductItem = withEditMode(ProductItem);
+
+const PAGE_SIZE = 5;
 
 const ProductsEditScreen: React.FC = () => {
   const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
+  // for categoties only
+  const [categories, setCategories] = useState<Category[]>([]);
+  const firstCategoryRender = useRef(true);
+  const {
+    data: categoryResponseData,
+    isFetching: isFetchingCategories,
+    isSuccess: isSuccessCategories,
+  } = useGetCategoriesQuery(null, {
+    skip: !firstCategoryRender.current,
+  });
 
-  const productState = useSelector((state: RootState) => state.products);
-
-  const itemsEmpty = useSelector((state: RootState) => state.products.products).length === 0;
-  const categoriesEmpty = useSelector((state: RootState) => state.products.categories).length === 0;
-  const firstRender = useRef(true);
+  const categoryData = categoryResponseData?.data;
+  const categoryServerPagination = categoryResponseData?.pagination;
 
   useEffect(() => {
-    if (itemsEmpty && firstRender.current) {
-      dispatch(getPartProducts({ pagination: { pageSize: 10, pageNumber: 1 } }));
+    if (
+      categoryData &&
+      !isFetchingCategories &&
+      (categoryServerPagination.pageNumber !== 1 || firstCategoryRender.current)
+    ) {
+      setCategories((prev) => [...prev, ...categoryData]);
+      firstCategoryRender.current = false;
     }
-    if (categoriesEmpty && firstRender.current) {
-      dispatch(getCategories(null));
-    }
-    firstRender.current = false;
-  }, []);
+  }, [categoryData, categoryServerPagination, isFetchingCategories]);
 
-  const items = useSelector((state: RootState) => state.products.products);
-  const categories = useSelector((state: RootState) => state.products.categories);
-  const pagination = useSelector((state: RootState) => state.products.pagination);
-  const productError = useSelector((state: RootState) => state.products.error);
-
-  const [categoryNames, setCategoryNames] = useState(categories.map((category) => category.name));
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [categoryNames, setCategoryNames] = useState<string[]>([]);
 
   useEffect(() => {
     setCategoryNames(categories.map((category) => category.name));
   }, [categories]);
+  // for categoties only
 
-  const pageTotal = Math.ceil(pagination.total / pagination.pageSize);
+  const [pagination, setPagination] = useState<Pagination>({ pageSize: PAGE_SIZE, pageNumber: 1 });
+  const [items, setItems] = useState<Product[]>([]);
+  const [currentFilters, setCurrentFilters] = useState<ProductsFilters>({});
+  const firstRender = useRef(true);
+  const [reset, setReset] = useState(true);
+
+  const {
+    data: ResponseData,
+    isFetching,
+    isLoading,
+    isError,
+    isSuccess,
+    error,
+  } = useGetProductsQuery({ ...currentFilters, pagination });
+
+  const data = ResponseData?.data;
+  const serverPagination = ResponseData?.pagination;
+  useEffect(() => {
+    if (data && !isFetching && (serverPagination.pageNumber !== 1 || firstRender.current)) {
+      setItems((prevItems) => [...prevItems, ...data]);
+      firstRender.current = false;
+    }
+  }, [data, serverPagination, reset, isFetching]);
+
+  const handleFiltersChange = useCallback((filters: ProductsFilters) => {
+    setCurrentFilters(filters);
+    setPagination((prev) => ({ ...prev, pageNumber: 1 }));
+    setItems((prev) => []);
+    firstRender.current = true;
+    setReset((prev) => !prev);
+  }, []);
+
+  const handleFetchProducts = useCallback(() => {
+    if (serverPagination && items.length < serverPagination.total && !isFetching) {
+      setPagination((prev) => ({ ...prev, pageNumber: prev.pageNumber + 1 }));
+    }
+  }, [serverPagination, items.length, isFetching]);
+
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+
+  const [updateProduct] = useUpdateProductMutation();
+  const [createProduct] = useCreateProductMutation();
 
   const handleEditProduct = useCallback(
     (id: string, data: MutateProductBody) => {
+      console.log(JSON.stringify({ id, data }));
       if (!id) {
-        dispatch(addProduct(data));
+        createProduct(data).then((res) => {
+          console.log(JSON.stringify(res));
+        });
         return;
       }
       if (id) {
-        dispatch(updateProduct({ id, body: data }));
+        updateProduct({ id, body: data })
+          // updateProduct({ id: '9b7d0c31-2ed4-4f5a-8b3d-ee0422ce152b', body: data })
+          .then((res) => {
+            /* nothing*/
+            if (res.data) {
+              setItems((prev) => prev.map((item) => (item.id === res.data.id ? res.data : item)));
+            }
+            console.log(JSON.stringify(res));
+          })
+          .catch((error) => {
+            /* nothing*/
+            console.error(JSON.stringify(error));
+          });
         return;
       }
     },
-    [dispatch, items]
+    [items]
   );
 
-  const handleFetchProducts = useCallback(() => {
-    if (
-      pagination.pageNumber !== pageTotal &&
-      pagination.pageNumber !== 0 &&
-      productState.status !== 'loading' &&
-      productState.status !== 'failed'
-    ) {
-      dispatch(getPartProducts({ pagination: { pageSize: 10, pageNumber: pagination.pageNumber + 1 } }));
-    }
-  }, [dispatch, pagination, pageTotal, productState.status]);
+  const handleAddClick = useCallback(() => {
+    setEditingProduct({
+      id: null,
+      name: '',
+      photo: '',
+    } as Product);
+  }, []);
 
   const renderCallback = useCallback(
     (item: Product) => (
       <div className={cn(styles.item)} key={item.id}>
         <EditProductItem
-          onEdit={() => setEditingProduct(item)}
           name={item.name}
           desc={item.desc}
           price={item.price}
           photo={item.photo}
           withButton={false}
+          onEdit={() => setEditingProduct(item)}
         />
       </div>
     ),
     []
   );
 
-  const handleAddClick = useCallback(() => {
-    setEditingProduct({
-      id: null,
-      category: categories[0],
-      name: '',
-      desc: '',
-      price: 0,
-      photo: '',
-      oldPrice: 0,
-    } as Product);
-  }, [categories]);
-
   return (
     <>
-      <div className={styles.wrapper}>
-        <div>
+      <PageLayout
+        footer={
+          <>
+            (
+            {error && (
+              <div className={styles.footer}>
+                {/* <div className={styles.error}>{JSON.stringify(error)}</div> */}
+                <div className={styles.error}>{(error as string[]).map((str) => t(str)).join('\n')}</div>
+              </div>
+            )}
+            )
+          </>
+        }
+        header={<>
           <Button
             className={styles.addButton}
             lable="Add product"
             onClick={handleAddClick}
-            disabled={productState.status === 'loading'}
+            disabled={isLoading}
           />
-        </div>
-        <div className={styles.content}>
+        </>}
+        sidebar={
+          isSuccessCategories ? (
+            <>
+              <ProductsFiltersForm
+                initialFilters={currentFilters}
+                onChange={handleFiltersChange}
+                categories={categories}
+              />
+            </>
+          ) : (
+            <div>Loading...</div>
+          )
+        }
+      >
+        <div className={cn(styles.list)}>
           <ComponentFetchList items={items} doFetch={handleFetchProducts} render={renderCallback} oneObserve={true} />
         </div>
-        {productError && (
-          <div className={styles.footer}>
-            <div className={styles.error}>{(productError as string[]).map((str) => t(str)).join('\n')}</div>
-          </div>
-        )}
-      </div>
+      </PageLayout>
       {editingProduct && (
         <Modal setVisible={(visible) => (visible ? null : setEditingProduct(null))} visible={editingProduct !== null}>
           <ProductEditForm
