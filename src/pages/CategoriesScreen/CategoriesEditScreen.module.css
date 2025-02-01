@@ -1,7 +1,7 @@
 .item {
-    /* display: flex;
+    display: flex;
     flex-wrap: wrap;
-    justify-content: center; */
+    justify-content: center;
     margin-bottom: 10px;
 }
 
@@ -37,9 +37,9 @@
     background-color: var(--background-color);
     display: flex;
     flex-direction: row;
-  }
-  
+}
+
 .error {
-  color: red;
-  flex-grow: 1;
+    color: red;
+    flex-grow: 1;
 }
