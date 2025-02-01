@@ -1,5 +1,3 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithErrorHandler } from 'src/shared/configs/apiConfig';
 import { stringifyObject } from 'src/shared/lib/stringifyObjectHelper';
 import {
   GetPageResult,
@@ -8,17 +6,18 @@ import {
   MutateRequest,
   MutateCategoryBody,
 } from 'src/shared/types/serverTypes';
+import { baseApi } from '../../../shared/api/baseApi';
 
-export const categoryApi = createApi({
-  reducerPath: 'categoryApi',
-  tagTypes: ['category'],
-  baseQuery: baseQueryWithErrorHandler,
+export const categoryApi = baseApi.injectEndpoints({
+  // reducerPath: 'categoryApi',
+  // tagTypes: ['category'],
+  // baseQuery: baseQueryWithErrorHandler,
   endpoints: (builder) => ({
     getCategories: builder.query<GetPageResult<Category>, CategoriesFilters>({
       query: (filters) =>
         `/categories${!filters ? '' : `?${new URLSearchParams(stringifyObject(filters)).toString()}`}`,
       // query: (filters) => '/category',
-      providesTags: ['category'],
+      // providesTags: ['category'],
       // keepUnusedDataFor: 10,
     }),
     updateCategory: builder.mutation<Category, MutateRequest<MutateCategoryBody>>({

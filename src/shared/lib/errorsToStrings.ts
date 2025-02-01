@@ -1,7 +1,7 @@
 import { ServerErrors } from '../types/serverTypes';
-import { getLocaleErrorMessage } from './errorsParsing';
+import { getLocalizedErrorMessage } from './errorsParsing';
 
-export const handleApiError = (error: unknown): string[] => {
+export const errorsToStrings = (error: unknown): string[] => {
   if (isServerError(error)) {
     error.errors.forEach((err) => {
       console.error(`Error [${err.extensions.code}]: ${err.message} ${err?.fieldName || 'common'}`);
@@ -9,7 +9,7 @@ export const handleApiError = (error: unknown): string[] => {
         console.error(`Field: ${err.fieldName}`);
       }
     });
-    return error.errors.map((error) => getLocaleErrorMessage(error));
+    return error.errors.map((error) => getLocalizedErrorMessage(error));
   }
 
   console.error('Unhandled error:', error);

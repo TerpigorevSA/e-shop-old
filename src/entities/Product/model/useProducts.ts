@@ -1,5 +1,5 @@
 import { ProductsFilters } from '../../../shared/types/serverTypes';
-import { handleApiError } from '../../../shared/lib/errorHandler';
+import { errorsToStrings } from '../../../shared/lib/errorsToStrings';
 import { useGetProductsQuery } from '../api/productApi';
 import { getAccessToken } from '../../../shared/lib/localStorage';
 
@@ -22,7 +22,7 @@ export const useProducts = (filters: ProductsFilters, options?: UseProductOption
   });
 
   if (isError) {
-    handleApiError(error);
+    errorsToStrings(error);
   }
 
   return { productsResponse, isLoading, isFetching, isUninitialized, isSuccess, isError, error, refetch };

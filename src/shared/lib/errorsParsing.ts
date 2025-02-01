@@ -1,6 +1,6 @@
 import { ServerError, ErrorCode } from '../types/serverTypes';
 
-export const getLocaleErrorMessage = (error: ServerError): string => {
+export const getLocalizedErrorMessage = (error: ServerError): string => {
   switch (error.extensions.code) {
     case ErrorCode.ERR_INCORRECT_EMAIL_OR_PASSWORD:
       return 'ErrorCode.ERR_INCORRECT_EMAIL_OR_PASSWORD';

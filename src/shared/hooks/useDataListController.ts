@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { GetPageResult, MutateRequest, Pagination } from '../types/serverTypes';
-import {
+import type {
   BaseQueryFn,
   FetchArgs,
   FetchBaseQueryError,
@@ -14,14 +14,18 @@ const useDataListController = <TItem extends { id: string }, TFilters, MutateBod
   useQueryHook: TypedUseQuery<
     GetPageResult<TItem>,
     TFilters,
-    BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>
-  >, //QueryDefinition<TFilters, BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>, string, GetPageResult<TItem>, string>>,  //QueryHook<{ filters: TFilters; pagination: Pagination }, GetPageResult<TItem>>,
+    BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError | string[]>
+  >,
   useUpdateMutation: TypedUseMutation<
     TItem,
     MutateRequest<MutateBody>,
-    BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>
-  >, //() => any,
-  useCreateMutation: TypedUseMutation<TItem, MutateBody, BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>> //() => any,
+    BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError | string[]>
+  >,
+  useCreateMutation: TypedUseMutation<
+    TItem,
+    MutateBody,
+    BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError | string[]>
+  >
 ) => {
   const [pagination, setPagination] = useState<Pagination>({ pageSize: PAGE_SIZE, pageNumber: 1 });
   const [items, setItems] = useState<TItem[]>([]);

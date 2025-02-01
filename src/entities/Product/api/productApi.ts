@@ -1,5 +1,4 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithErrorHandler } from 'src/shared/configs/apiConfig';
 import { stringifyObject } from 'src/shared/lib/stringifyObjectHelper';
 import {
   GetPageResult,
@@ -8,19 +7,21 @@ import {
   Product,
   ProductsFilters,
 } from 'src/shared/types/serverTypes';
+import { customBaseQuery } from '../../../shared/api/customBaseQuery';
+import { baseApi } from '../../../shared/api/baseApi';
 
-export const productApi = createApi({
-  reducerPath: 'productApi',
-  tagTypes: ['product'],
-  baseQuery: baseQueryWithErrorHandler,
+export const productApi = baseApi.injectEndpoints({
+  // export const productApi = createApi({
+  // reducerPath: 'productApi',
+  // tagTypes: ['product'],
+  // baseQuery: customBaseQuery,
   endpoints: (builder) => ({
     getProducts: builder.query<GetPageResult<Product>, ProductsFilters>({
       query: (filters) =>
-        `/products${
-          !filters ? '' : `?${new URLSearchParams(stringifyObject(JSON.parse(JSON.stringify(filters)))).toString()}`
+        `/products${!filters ? '' : `?${new URLSearchParams(stringifyObject(JSON.parse(JSON.stringify(filters)))).toString()}`
         }`,
       // query: (filters) => '/product',
-      providesTags: ['product'],
+      // providesTags: ['product'],
       // keepUnusedDataFor: 10,
     }),
     updateProduct: builder.mutation<Product, MutateRequest<MutateProductBody>>({
