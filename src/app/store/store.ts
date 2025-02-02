@@ -10,11 +10,13 @@ import ordersReducer from '../../features/Orders/model/slice';
 import { apiMiddleware, apiReducer } from '../api/api';
 import { productApi } from '../../entities/Product/api/productApi';
 import { categoryApi } from '../../entities/Category/api/categoryApi';
+import { orderApi } from '../../entities/Order/api/orderApi';
 
 export const store = configureStore({
   reducer: {
     [productApi.reducerPath]: productApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
+    [orderApi.reducerPath]: orderApi.reducer,
     api: apiReducer,
     auth: authReducer,
     profile: profileReducer,
@@ -25,7 +27,7 @@ export const store = configureStore({
     orders: ordersReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiMiddleware, productApi.middleware, categoryApi.middleware),
+    getDefaultMiddleware().concat(apiMiddleware, productApi.middleware, categoryApi.middleware, orderApi.middleware),
   devTools: process.env.NODE_ENV !== 'production',
 });
 
