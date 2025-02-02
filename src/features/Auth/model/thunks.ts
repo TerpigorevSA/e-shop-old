@@ -3,7 +3,7 @@ import { saveTokenToLocalStorage, removeTokenFromLocalStorage } from '../../../s
 import { getProfile } from '../../../entities/User/model/thunks';
 import { API_BASE_URL } from '../../../shared/configs/api';
 import { ServerErrors } from '../../../shared/types/serverTypes';
-import { getLocaleErrorMessage } from '../../../shared/lib/errorsParsing';
+import { getLocalizedErrorMessage } from '../../../shared/lib/errorsParsing';
 import { resetState } from '../../../shared/actions/actions';
 
 export const signin = createAsyncThunk(
@@ -18,7 +18,7 @@ export const signin = createAsyncThunk(
 
       if (!response.ok) {
         const errors = await response.json();
-        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
         return thunkAPI.rejectWithValue(errorMessages);
       }
       const data = await response.json();
@@ -49,7 +49,7 @@ export const signup = createAsyncThunk(
 
       if (!response.ok) {
         const errors = await response.json();
-        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
         return thunkAPI.rejectWithValue(errorMessages);
       }
       const data = await response.json();

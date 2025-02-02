@@ -3,7 +3,7 @@ import { getTokenFromLocalStorage } from '../../../shared/lib/localStorage';
 import { setCurrentUser, updateCurrentUser } from './slice';
 import { API_BASE_URL } from '../../../shared/configs/api';
 import { GetPageResult, Order, ServerErrors, UserOrdersFilters } from '../../../shared/types/serverTypes';
-import { getLocaleErrorMessage } from '../../../shared/lib/errorsParsing';
+import { getLocalizedErrorMessage } from '../../../shared/lib/errorsParsing';
 import { stringifyObject } from 'src/shared/lib/stringifyObjectHelper';
 
 export const getProfile = createAsyncThunk('user/getProfile', async (_, thunkAPI) => {
@@ -18,7 +18,7 @@ export const getProfile = createAsyncThunk('user/getProfile', async (_, thunkAPI
 
     if (!response.ok) {
       const errors = await response.json();
-      const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+      const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
       return thunkAPI.rejectWithValue(errorMessages);
     }
     const data = await response.json();
@@ -44,7 +44,7 @@ export const updateProfile = createAsyncThunk('user/updateProfile', async (user:
 
     if (!response.ok) {
       const errors = await response.json();
-      const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+      const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
       return thunkAPI.rejectWithValue(errorMessages);
     }
     const data = await response.json();
@@ -72,7 +72,7 @@ export const changePassword = createAsyncThunk(
 
       if (!response.ok) {
         const errors = await response.json();
-        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
         return thunkAPI.rejectWithValue(errorMessages);
       }
       const data = await response.json();
@@ -100,7 +100,7 @@ export const getUserOrders = createAsyncThunk<GetPageResult<Order>, UserOrdersFi
       );
       if (!response.ok) {
         const errors = await response.json();
-        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
         return thunkAPI.rejectWithValue(errorMessages);
       }
       const data = await response.json();

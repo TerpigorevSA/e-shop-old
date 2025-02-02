@@ -9,7 +9,7 @@ import {
   MutateRequest,
   MutateProductBody,
 } from '../../../shared/types/serverTypes';
-import { getLocaleErrorMessage } from '../../../shared/lib/errorsParsing';
+import { getLocalizedErrorMessage } from '../../../shared/lib/errorsParsing';
 import { stringifyObject } from '../../../shared/lib/stringifyObjectHelper';
 
 export const getPartProducts = createAsyncThunk<GetPageResult<Product>, ProductsFilters>(
@@ -28,7 +28,7 @@ export const getPartProducts = createAsyncThunk<GetPageResult<Product>, Products
       );
       if (!response.ok) {
         const errors = await response.json();
-        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
         return thunkAPI.rejectWithValue(errorMessages);
       }
       const data = await response.json();
@@ -55,7 +55,7 @@ export const updateProduct = createAsyncThunk<Product, MutateRequest<MutateProdu
 
       if (!response.ok) {
         const errors = await response.json();
-        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
         return thunkAPI.rejectWithValue(errorMessages);
       }
       const data = await response.json();
@@ -80,7 +80,7 @@ export const addProduct = createAsyncThunk<Product, MutateProductBody>('products
 
     if (!response.ok) {
       const errors = await response.json();
-      const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+      const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
       return thunkAPI.rejectWithValue(errorMessages);
     }
     const data = await response.json();

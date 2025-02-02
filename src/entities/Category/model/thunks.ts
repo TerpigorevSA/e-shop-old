@@ -9,7 +9,7 @@ import {
   ServerErrors,
 } from '../../../shared/types/serverTypes';
 import { getTokenFromLocalStorage } from '../../../shared/lib/localStorage';
-import { getLocaleErrorMessage } from '../../../shared/lib/errorsParsing';
+import { getLocalizedErrorMessage } from '../../../shared/lib/errorsParsing';
 import { stringifyObject } from '../../../shared/lib/stringifyObjectHelper';
 
 export const getCategories = createAsyncThunk<GetPageResult<Category>, CategoriesFilters>(
@@ -20,8 +20,7 @@ export const getCategories = createAsyncThunk<GetPageResult<Category>, Categorie
 
     try {
       const response = await fetch(
-        `${API_BASE_URL}/api/categories${
-          !filters ? '' : `?${new URLSearchParams(stringifyObject(filters)).toString()}`
+        `${API_BASE_URL}/api/categories${!filters ? '' : `?${new URLSearchParams(stringifyObject(filters)).toString()}`
         }`,
         {
           method: 'GET',
@@ -30,7 +29,7 @@ export const getCategories = createAsyncThunk<GetPageResult<Category>, Categorie
       );
       if (!response.ok) {
         const errors = await response.json();
-        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
         return thunkAPI.rejectWithValue(errorMessages);
       }
       const data = await response.json();
@@ -50,8 +49,7 @@ export const getPartCategories = createAsyncThunk<GetPageResult<Category>, Categ
 
     try {
       const response = await fetch(
-        `${API_BASE_URL}/api/categories${
-          !filters ? '' : `?${new URLSearchParams(stringifyObject(filters)).toString()}`
+        `${API_BASE_URL}/api/categories${!filters ? '' : `?${new URLSearchParams(stringifyObject(filters)).toString()}`
         }`,
         {
           method: 'GET',
@@ -60,7 +58,7 @@ export const getPartCategories = createAsyncThunk<GetPageResult<Category>, Categ
       );
       if (!response.ok) {
         const errors = await response.json();
-        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
         return thunkAPI.rejectWithValue(errorMessages);
       }
       const data = await response.json();
@@ -87,7 +85,7 @@ export const updateCategory = createAsyncThunk<Category, MutateRequest<MutateCat
 
       if (!response.ok) {
         const errors = await response.json();
-        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
         return thunkAPI.rejectWithValue(errorMessages);
       }
       const data = await response.json();
@@ -114,7 +112,7 @@ export const addCategory = createAsyncThunk<Category, MutateCategoryBody>(
 
       if (!response.ok) {
         const errors = await response.json();
-        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
         return thunkAPI.rejectWithValue(errorMessages);
       }
       const data = await response.json();

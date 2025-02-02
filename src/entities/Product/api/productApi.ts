@@ -1,4 +1,3 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
 import { stringifyObject } from 'src/shared/lib/stringifyObjectHelper';
 import {
   GetPageResult,
@@ -7,7 +6,6 @@ import {
   Product,
   ProductsFilters,
 } from 'src/shared/types/serverTypes';
-import { customBaseQuery } from '../../../shared/api/customBaseQuery';
 import { baseApi } from '../../../shared/api/baseApi';
 
 export const productApi = baseApi.injectEndpoints({
@@ -18,7 +16,8 @@ export const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query<GetPageResult<Product>, ProductsFilters>({
       query: (filters) =>
-        `/products${!filters ? '' : `?${new URLSearchParams(stringifyObject(JSON.parse(JSON.stringify(filters)))).toString()}`
+        `/products${
+          !filters ? '' : `?${new URLSearchParams(stringifyObject(JSON.parse(JSON.stringify(filters)))).toString()}`
         }`,
       // query: (filters) => '/product',
       // providesTags: ['product'],

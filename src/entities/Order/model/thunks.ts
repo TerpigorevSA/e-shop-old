@@ -10,7 +10,7 @@ import {
   MutateOrderBody,
   MutatePartOrderBody,
 } from '../../../shared/types/serverTypes';
-import { getLocaleErrorMessage } from '../../../shared/lib/errorsParsing';
+import { getLocalizedErrorMessage } from '../../../shared/lib/errorsParsing';
 import { stringifyObject } from '../../../shared/lib/stringifyObjectHelper';
 
 export const getPartOrders = createAsyncThunk<GetPageResult<Order>, OrdersFilters>(
@@ -29,7 +29,7 @@ export const getPartOrders = createAsyncThunk<GetPageResult<Order>, OrdersFilter
       );
       if (!response.ok) {
         const errors = await response.json();
-        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
         return thunkAPI.rejectWithValue(errorMessages);
       }
       const data = await response.json();
@@ -56,7 +56,7 @@ export const updateOrder = createAsyncThunk<Order, MutateRequest<MutateOrderBody
 
       if (!response.ok) {
         const errors = await response.json();
-        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
         return thunkAPI.rejectWithValue(errorMessages);
       }
       const data = await response.json();
@@ -83,7 +83,7 @@ export const updatePartOrder = createAsyncThunk<Order, MutateRequest<MutatePartO
 
       if (!response.ok) {
         const errors = await response.json();
-        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+        const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
         return thunkAPI.rejectWithValue(errorMessages);
       }
       const data = await response.json();
@@ -108,7 +108,7 @@ export const createOrder = createAsyncThunk<Order, MutateOrderBody>('orders/add'
 
     if (!response.ok) {
       const errors = await response.json();
-      const errorMessages = (errors as ServerErrors).errors.map((error) => getLocaleErrorMessage(error));
+      const errorMessages = (errors as ServerErrors).errors.map((error) => getLocalizedErrorMessage(error));
       return thunkAPI.rejectWithValue(errorMessages);
     }
     const data = await response.json();

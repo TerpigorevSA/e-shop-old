@@ -16,17 +16,14 @@ const baseQuery = fetchBaseQuery({
 });
 
 export const customBaseQuery: BaseQueryFn<
-  //   Parameters<typeof baseQuery>[0],
   string | FetchArgs,
   unknown,
   FetchBaseQueryError | string[]
 > = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions);
-
   if (result.error) {
     const fetchError = result.error as FetchBaseQueryError;
-
-    if (fetchError.data && Array.isArray(fetchError.data)) {
+    if (fetchError.data) {
       return { error: errorsToStrings(fetchError.data) };
     }
 
