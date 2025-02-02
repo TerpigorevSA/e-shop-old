@@ -7,7 +7,7 @@
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
-    "test": "jest tests, jest src",
+    "test": "jest tests --coverage -verbose",
     "lint": "eslint src --fix",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
