@@ -28,6 +28,7 @@ const useDataListController = <TItem extends { id: string }, TFilters, MutateBod
   >
 ) => {
   const [pagination, setPagination] = useState<Pagination>({ pageSize: PAGE_SIZE, pageNumber: 1 });
+  const [permanentFilters, setPermanentFilters] = useState<TFilters>({} as TFilters);
   const [items, setItems] = useState<TItem[]>([]);
   const [currentFilters, setCurrentFilters] = useState<TFilters>({} as TFilters);
   const firstRender = useRef(true);
@@ -40,7 +41,7 @@ const useDataListController = <TItem extends { id: string }, TFilters, MutateBod
     isError: isErrorQuery,
     isSuccess,
     error: errorQuery,
-  } = useQueryHook({ ...currentFilters, pagination });
+  } = useQueryHook({ ...currentFilters, pagination, ...permanentFilters });
 
   const data = ResponseData?.data;
   const serverPagination = ResponseData?.pagination;
@@ -109,8 +110,18 @@ const useDataListController = <TItem extends { id: string }, TFilters, MutateBod
     setEditingItem(null);
   }, []);
 
+  const handlerPermanentFiltersChange = useCallback((filters: TFilters) => {
+    setPermanentFilters(filters);
+    setPagination((prev) => ({ ...prev, pageNumber: 1 }));
+    setItems([]);
+    firstRender.current = true;
+    setReset((prev) => !prev);
+  }, []);
+
   return {
     items,
+    permanentFilters,
+    handlerPermanentFiltersChange,
     currentFilters,
     handlerFiltersChange,
     handlerFetchItems,
