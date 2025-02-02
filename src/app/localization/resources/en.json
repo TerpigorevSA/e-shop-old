@@ -273,5 +273,11 @@
       "label": "Status",
       "noStatus": "Do not filter"
     }
+  },
+  "OrdersFiltersForm": {
+    "status": {
+      "label": "Status",
+      "noStatus": "Do not filter"
+    }
   }
 }

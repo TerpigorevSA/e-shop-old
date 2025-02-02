@@ -12,8 +12,11 @@ const CategoriesFiltersForm = ({ initialFilters, onChange }: CategoriesFiltersFo
   const { t } = useTranslation();
 
   return (
-    <CommonFiltersForm initialFilters={initialFilters} childrenSchema={categoryFilterSchema} onChange={onChange}>
-    </CommonFiltersForm>
+    <CommonFiltersForm
+      initialFilters={initialFilters}
+      childrenSchema={categoryFilterSchema}
+      onChange={onChange}
+    ></CommonFiltersForm>
   );
 };
 

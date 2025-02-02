@@ -1,11 +1,5 @@
 import { stringifyObject } from 'src/shared/lib/stringifyObjectHelper';
-import {
-  GetPageResult,
-  MutateOrderBody,
-  MutateRequest,
-  Order,
-  OrdersFilters,
-} from 'src/shared/types/serverTypes';
+import { GetPageResult, MutateOrderBody, MutateRequest, Order, OrdersFilters } from 'src/shared/types/serverTypes';
 import { baseApi } from '../../../shared/api/baseApi';
 
 export const orderApi = baseApi.injectEndpoints({
@@ -16,7 +10,8 @@ export const orderApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getOrders: builder.query<GetPageResult<Order>, OrdersFilters>({
       query: (filters) =>
-        `/orders${!filters ? '' : `?${new URLSearchParams(stringifyObject(JSON.parse(JSON.stringify(filters)))).toString()}`
+        `/orders${
+          !filters ? '' : `?${new URLSearchParams(stringifyObject(JSON.parse(JSON.stringify(filters)))).toString()}`
         }`,
       // query: (filters) => '/order',
       // providesTags: ['order'],
@@ -27,6 +22,14 @@ export const orderApi = baseApi.injectEndpoints({
         url: `/orders/${updateOrder.id}`,
         method: 'PUT',
         body: updateOrder.body,
+      }),
+      // invalidatesTags: ['order'],
+    }),
+    patchOrder: builder.mutation<Order, MutateRequest<Partial<MutateOrderBody>>>({
+      query: (patchOrder) => ({
+        url: `/orders/${patchOrder.id}`,
+        method: 'PATCH',
+        body: patchOrder.body,
       }),
       // invalidatesTags: ['order'],
     }),
@@ -41,4 +44,4 @@ export const orderApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetOrdersQuery, useUpdateOrderMutation, useCreateOrderMutation } = orderApi;
+export const { useGetOrdersQuery, useUpdateOrderMutation, usePatchOrderMutation, useCreateOrderMutation } = orderApi;

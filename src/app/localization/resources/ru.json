@@ -273,5 +273,11 @@
       "label": "Статус",
       "noStatus": "Не фильтровать"
     }
+  },
+  "OrdersFiltersForm": {
+    "status": {
+      "label": "Статус",
+      "noStatus": "Не фильтровать"
+    }
   }
 }

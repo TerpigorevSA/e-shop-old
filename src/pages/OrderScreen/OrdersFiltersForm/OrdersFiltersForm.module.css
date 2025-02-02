@@ -1,0 +1,28 @@
+.label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.subLabel {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.error {
+  color: red;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
