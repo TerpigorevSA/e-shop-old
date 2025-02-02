@@ -139,7 +139,7 @@ const ProductsEditScreen: React.FC = () => {
         </div>
       </PageLayout>
       {editingItem && (
-        <Modal setVisible={(visible) => (visible ? null : clearEditItem)} visible={editingItem !== null}>
+        <Modal setVisible={(visible) => (visible ? null : clearEditItem())} visible={editingItem !== null}>
           <ProductEditForm
             defaultValues={{
               name: editingItem.name,
