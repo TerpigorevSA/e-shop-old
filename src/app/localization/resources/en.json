@@ -267,5 +267,11 @@
       "label": "Category",
       "noCategory": "Do not filter"
     }
+  },
+  "UserOrdersFiltersForm": {
+    "status": {
+      "label": "Status",
+      "noStatus": "Do not filter"
+    }
   }
 }

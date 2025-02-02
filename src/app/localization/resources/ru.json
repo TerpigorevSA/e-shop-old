@@ -267,5 +267,11 @@
       "label": "Категории",
       "noCategory": "Не фильтровать"
     }
+  },
+  "UserOrdersFiltersForm": {
+    "status": {
+      "label": "Статус",
+      "noStatus": "Не фильтровать"
+    }
   }
 }
