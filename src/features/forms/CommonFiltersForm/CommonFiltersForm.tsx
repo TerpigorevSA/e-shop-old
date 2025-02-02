@@ -11,12 +11,12 @@ type CommonFilterFormProps<T extends CommonFilters> = {
   initialFilters: T;
   childrenSchema?: yup.ObjectSchema<Omit<T, keyof CommonFilters>>;
   children?:
-  | ReactNode
-  | ((
-    errors: Record<string, string>,
-    filters: T,
-    handleChange: <K extends keyof T>(key: K, value: T[K]) => void
-  ) => ReactNode);
+    | ReactNode
+    | ((
+        errors: Record<string, string>,
+        filters: T,
+        handleChange: <K extends keyof T>(key: K, value: T[K]) => void
+      ) => ReactNode);
 };
 
 export const CommonFiltersForm = <T extends CommonFilters>({
@@ -76,7 +76,8 @@ export const CommonFiltersForm = <T extends CommonFilters>({
     <form className={cn(styles.form)} onSubmit={handleSubmit}>
       <div>
         <label className={cn(styles.label)}>{t('CommonFiltersForm.createdAt.label')}</label>
-        <label className={cn(styles.subLabel)}>{t('CommonFiltersForm.createdAt.from')}
+        <label className={cn(styles.subLabel)}>
+          {t('CommonFiltersForm.createdAt.from')}
           <div style={{ flexDirection: 'row', display: 'flex' }}>
             <input
               className={cn(styles.input)}
@@ -103,7 +104,8 @@ export const CommonFiltersForm = <T extends CommonFilters>({
             </button>
           </div>
         </label>
-        <label className={cn(styles.subLabel)}>{t('CommonFiltersForm.createdAt.by')}
+        <label className={cn(styles.subLabel)}>
+          {t('CommonFiltersForm.createdAt.by')}
           <div style={{ flexDirection: 'row', display: 'flex' }}>
             <input
               className={cn(styles.input)}
@@ -135,7 +137,8 @@ export const CommonFiltersForm = <T extends CommonFilters>({
 
       <div>
         <label className={cn(styles.label)}>{t('CommonFiltersForm.updatedAt.label')}</label>
-        <label className={cn(styles.subLabel)}>{t('CommonFiltersForm.updatedAt.from')}
+        <label className={cn(styles.subLabel)}>
+          {t('CommonFiltersForm.updatedAt.from')}
           <div style={{ flexDirection: 'row', display: 'flex' }}>
             <input
               className={cn(styles.input)}
@@ -162,7 +165,8 @@ export const CommonFiltersForm = <T extends CommonFilters>({
             </button>
           </div>
         </label>
-        <label className={cn(styles.subLabel)}>{t('CommonFiltersForm.updatedAt.by')}
+        <label className={cn(styles.subLabel)}>
+          {t('CommonFiltersForm.updatedAt.by')}
           <div style={{ flexDirection: 'row', display: 'flex' }}>
             <input
               className={cn(styles.input)}
@@ -194,7 +198,8 @@ export const CommonFiltersForm = <T extends CommonFilters>({
 
       <div>
         <label className={cn(styles.label)}>{t('CommonFiltersForm.sorting.label')}</label>
-        <label className={cn(styles.subLabel)}>{t('CommonFiltersForm.sorting.byField')}
+        <label className={cn(styles.subLabel)}>
+          {t('CommonFiltersForm.sorting.byField')}
           <select
             className={cn(styles.select)}
             value={localFilters?.sorting?.field || ''}
@@ -203,9 +208,9 @@ export const CommonFiltersForm = <T extends CommonFilters>({
                 'sorting',
                 e.target.value
                   ? {
-                    field: e.target.value as Sorting['field'],
-                    type: localFilters?.sorting?.type || 'ASC',
-                  }
+                      field: e.target.value as Sorting['field'],
+                      type: localFilters?.sorting?.type || 'ASC',
+                    }
                   : undefined
               )
             }
@@ -218,7 +223,8 @@ export const CommonFiltersForm = <T extends CommonFilters>({
           </select>
         </label>
         {errors['sorting.field'] && <p className={cn(styles.error)}>{t(errors['sorting.field'])}</p>}
-        <label className={cn(styles.subLabel)}>{t('CommonFiltersForm.sorting.direction')}
+        <label className={cn(styles.subLabel)}>
+          {t('CommonFiltersForm.sorting.direction')}
           <select
             className={cn(styles.select)}
             value={localFilters?.sorting?.type || 'ASC'}

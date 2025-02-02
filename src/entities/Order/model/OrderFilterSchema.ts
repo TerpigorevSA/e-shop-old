@@ -6,12 +6,16 @@ export const orderFilterSchema: yup.ObjectSchema<Omit<OrdersFilters, keyof Commo
   ids: yup.array().optional(),
   productIds: yup.array().optional(),
   userId: yup.string().optional(),
-  status: yup.mixed<OrderStatus>().oneOf([
-    OrderStatus.Delivered,
-    OrderStatus.InTransit,
-    OrderStatus.OrderCancelled,
-    OrderStatus.PendingConfirmation,
-    OrderStatus.Processing,
-    OrderStatus.ReturnRequested,
-    OrderStatus.WaitingForDelivery,]).optional(),
+  status: yup
+    .mixed<OrderStatus>()
+    .oneOf([
+      OrderStatus.Delivered,
+      OrderStatus.InTransit,
+      OrderStatus.OrderCancelled,
+      OrderStatus.PendingConfirmation,
+      OrderStatus.Processing,
+      OrderStatus.ReturnRequested,
+      OrderStatus.WaitingForDelivery,
+    ])
+    .optional(),
 });

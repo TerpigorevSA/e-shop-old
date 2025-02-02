@@ -2,8 +2,6 @@ import { saveTokenToLocalStorage, removeTokenFromLocalStorage } from '../../../s
 import { baseApi } from '../../../shared/api/baseApi';
 import { userApi } from '../../../entities/User/model/api';
 import { setAuthenticated } from './slice';
-import { ServerErrors } from '../../../shared/types/serverTypes';
-import { getLocalizedErrorMessage } from '../../../shared/lib/errorsParsing';
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

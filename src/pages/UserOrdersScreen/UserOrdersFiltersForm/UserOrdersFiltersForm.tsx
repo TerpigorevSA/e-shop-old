@@ -21,18 +21,12 @@ const UserOrdersFiltersForm = ({ initialFilters, onChange }: UserOrdersFiltersFo
         handleChange: <K extends keyof OrdersFilters>(key: K, value: OrdersFilters[K]) => void
       ) => (
         <div>
-          <label className={cn(styles.label)}>{t('UserOrdersFiltersForm.status.label')}
+          <label className={cn(styles.label)}>
+            {t('UserOrdersFiltersForm.status.label')}
             <select
               className={cn(styles.select)}
               value={filters?.status || ''}
-              onChange={(e) =>
-                handleChange(
-                  'status',
-                  e.target.value
-                    ? e.target.value as OrderStatus
-                    : undefined
-                )
-              }
+              onChange={(e) => handleChange('status', e.target.value ? (e.target.value as OrderStatus) : undefined)}
             >
               <option value="">{t('UserOrdersFiltersForm.status.noStatus')}</option>
               <option value={OrderStatus.Delivered}>{t('OrderStatus.delivered')}</option>

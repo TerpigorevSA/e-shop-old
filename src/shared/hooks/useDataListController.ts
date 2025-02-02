@@ -73,10 +73,12 @@ const useDataListController = <TItem extends { id: string }, TFilters, MutateBod
   const handlerEditItem = useCallback(
     (id: string, data: MutateBody) => {
       if (!id) {
-        createItem(data).then((res) => {
-        })
+        createItem(data)
+          .then((res) => {
+            /* nothing */
+          })
           .catch((error) => {
-            console.error("Create item: ", error);
+            console.error('Create item: ', error);
           });
         return;
       }
@@ -88,7 +90,7 @@ const useDataListController = <TItem extends { id: string }, TFilters, MutateBod
             }
           })
           .catch((error) => {
-            console.error("Update item: ", error);
+            console.error('Update item: ', error);
           });
         return;
       }
@@ -127,7 +129,7 @@ const useDataListController = <TItem extends { id: string }, TFilters, MutateBod
     handlerFetchItems,
     isFetching,
     isLoading,
-    isError: (isErrorQuery || isErrorUpdate || isErrorCreate),
+    isError: isErrorQuery || isErrorUpdate || isErrorCreate,
     isSuccess,
     error: [
       ...(isErrorQuery ? (errorQuery as string[]) : []),

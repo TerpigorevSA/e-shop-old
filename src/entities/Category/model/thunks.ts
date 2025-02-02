@@ -20,7 +20,8 @@ export const getCategories = createAsyncThunk<GetPageResult<Category>, Categorie
 
     try {
       const response = await fetch(
-        `${API_BASE_URL}/api/categories${!filters ? '' : `?${new URLSearchParams(stringifyObject(filters)).toString()}`
+        `${API_BASE_URL}/api/categories${
+          !filters ? '' : `?${new URLSearchParams(stringifyObject(filters)).toString()}`
         }`,
         {
           method: 'GET',
@@ -49,7 +50,8 @@ export const getPartCategories = createAsyncThunk<GetPageResult<Category>, Categ
 
     try {
       const response = await fetch(
-        `${API_BASE_URL}/api/categories${!filters ? '' : `?${new URLSearchParams(stringifyObject(filters)).toString()}`
+        `${API_BASE_URL}/api/categories${
+          !filters ? '' : `?${new URLSearchParams(stringifyObject(filters)).toString()}`
         }`,
         {
           method: 'GET',
