@@ -37,9 +37,9 @@ const useDataListController = <TItem extends { id: string }, TFilters, MutateBod
     data: ResponseData,
     isFetching,
     isLoading,
-    isError,
+    isError: isErrorQuery,
     isSuccess,
-    error,
+    error: errorQuery,
   } = useQueryHook({ ...currentFilters, pagination });
 
   const data = ResponseData?.data;
@@ -66,31 +66,28 @@ const useDataListController = <TItem extends { id: string }, TFilters, MutateBod
     }
   }, [serverPagination, items.length, isFetching]);
 
-  const [updateProduct] = useUpdateMutation(); // updateParams: { id: string; body: MutateBody }
-  const [createProduct] = useCreateMutation(); // createParams: { body: MutateBody }
+  const [updateItem, { isError: isErrorUpdate, error: errorUpdate }] = useUpdateMutation(); // updateParams: { id: string; body: MutateBody }
+  const [createItem, { isError: isErrorCreate, error: errorCreate }] = useCreateMutation(); // createParams: { body: MutateBody }
 
   const handlerEditItem = useCallback(
     (id: string, data: MutateBody) => {
-      console.log(JSON.stringify({ id, data }));
       if (!id) {
-        createProduct(data).then((res) => {
-          console.log(JSON.stringify(res));
-        });
+        createItem(data).then((res) => {
+        })
+          .catch((error) => {
+            console.error("Create item: ", error);
+          });
         return;
       }
       if (id) {
-        updateProduct({ id, body: data })
-          // updateProduct({ id: '9b7d0c31-2ed4-4f5a-8b3d-ee0422ce152b', body: data })
+        updateItem({ id, body: data })
           .then((res) => {
-            /* nothing*/
             if (res.data) {
               setItems((prev) => prev.map((item) => (item.id === res.data.id ? res.data : item)));
             }
-            console.log(JSON.stringify(res));
           })
           .catch((error) => {
-            /* nothing*/
-            console.error(JSON.stringify(error));
+            console.error("Update item: ", error);
           });
         return;
       }
@@ -119,9 +116,13 @@ const useDataListController = <TItem extends { id: string }, TFilters, MutateBod
     handlerFetchItems,
     isFetching,
     isLoading,
-    isError,
+    isError: (isErrorQuery || isErrorUpdate || isErrorCreate),
     isSuccess,
-    error,
+    error: [
+      ...(isErrorQuery ? (errorQuery as string[]) : []),
+      ...(isErrorUpdate ? (errorUpdate as string[]) : []),
+      ...(isErrorCreate ? (errorCreate as string[]) : []),
+    ],
     editingItem,
     handlerAddClick,
     handlerEditClick,
