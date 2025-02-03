@@ -12,6 +12,7 @@ export const orderFilterSchema: yup.ObjectSchema<Omit<OrdersFilters, keyof Commo
       OrderStatus.Delivered,
       OrderStatus.InTransit,
       OrderStatus.OrderCancelled,
+      OrderStatus.Packaging,
       OrderStatus.PendingConfirmation,
       OrderStatus.Processing,
       OrderStatus.ReturnRequested,
