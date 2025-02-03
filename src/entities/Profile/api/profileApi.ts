@@ -18,7 +18,7 @@ export const profileApi = baseApi.injectEndpoints({
     changePassword: builder.mutation<Profile, ChangePasswordBody>({
       query: (newPassword) => ({
         url: `/profile/change-password`,
-        method: 'PUT',
+        method: 'POST',
         body: newPassword,
       }),
     }),

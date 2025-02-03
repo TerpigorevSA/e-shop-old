@@ -1,31 +1,43 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import EditProfile, { EditProfileFields } from './EditProfile/EditProfile';
 import ChangePassword, { ChangePasswordFields } from './ChangePassword/ChangePassword';
 import cn from 'clsx';
 import styles from './ProfileScreen.module.css';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../app/store/store';
-import { changePassword, updateProfile } from '../../entities/User/model/thunks';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../app/store/store';
+import {
+  useChangePasswordMutation,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from '../../entities/Profile/api/profileApi';
 
 const ProfileScreen: React.FC = () => {
   const { t } = useTranslation();
+
+  const { data: currentUser, isLoading: profileIsLoading, isUninitialized, error: profileError } = useGetProfileQuery();
+  const [updateProfile, { error: updateProfileError }] = useUpdateProfileMutation();
+  const [changePassword, { error: changePasswordError }] = useChangePasswordMutation();
+
   const dispatch: AppDispatch = useDispatch();
-  const currentUser = useSelector((state: RootState) => state.user.currentUser);
-  const profileStatus = useSelector((state: RootState) => state.profile.status);
-  const profileError = useSelector((state: RootState) => state.profile.error);
 
-  const handleEditProfileSubmit = (data: EditProfileFields) => {
-    dispatch(updateProfile({ name: data.userName }));
-  };
+  const handleEditProfileSubmit = useCallback(async (data: EditProfileFields) => {
+    await updateProfile({ name: data.userName });
+  }, []);
 
-  const handleChangePasswordSubmit = (data: ChangePasswordFields) => {
-    dispatch(changePassword({ password: data.oldPassword, newPassword: data.newPassword }));
-  };
+  const handleChangePasswordSubmit = useCallback(async (data: ChangePasswordFields) => {
+    await changePassword({ password: data.oldPassword, newPassword: data.newPassword });
+  }, []);
 
-  if (profileStatus === 'loading') {
+  if (isUninitialized || profileIsLoading) {
     return <div>{'loading'}</div>;
   }
+
+  const error = [
+    ...(profileError ? (profileError as string[]) : []),
+    ...(updateProfileError ? (updateProfileError as string[]) : []),
+    ...(changePasswordError ? (changePasswordError as string[]) : []),
+  ];
 
   return (
     <div className={cn(styles.page)}>
@@ -39,7 +51,7 @@ const ProfileScreen: React.FC = () => {
       <div>
         <ChangePassword onSubmit={handleChangePasswordSubmit} />
       </div>
-      {profileError && <div className={styles.error}>{(profileError as string[]).map((str) => t(str)).join('\n')}</div>}
+      {error && <div className={styles.error}>{(error as string[]).map((str) => t(str)).join('\n')}</div>}
     </div>
   );
 };
