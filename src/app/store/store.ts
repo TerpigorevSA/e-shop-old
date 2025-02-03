@@ -8,9 +8,6 @@ import categoriesReducer from '../../entities/Category/model/slice';
 import ordersReducer from '../../features/Orders/model/slice';
 
 import { apiMiddleware, apiReducer, apiReducerPath } from '../api/api';
-import { productApi } from '../../entities/Product/api/productApi';
-import { categoryApi } from '../../entities/Category/api/categoryApi';
-import { orderApi } from '../../entities/Order/api/orderApi';
 
 export const store = configureStore({
   reducer: {
@@ -26,8 +23,7 @@ export const store = configureStore({
     categories: categoriesReducer,
     orders: ordersReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiMiddleware),//, productApi.middleware, categoryApi.middleware, orderApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiMiddleware), //, productApi.middleware, categoryApi.middleware, orderApi.middleware),
   devTools: process.env.NODE_ENV !== 'production',
 });
 

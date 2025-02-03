@@ -4,8 +4,8 @@ import SignUp, { SignUpFields } from './SignUp/SignUp';
 import cn from 'clsx';
 import styles from './AuthScreen.module.css';
 import { useTranslation } from 'react-i18next';
-import { AppDispatch, RootState } from '../../app/store/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../app/store/store';
+import { useDispatch } from 'react-redux';
 import { signout } from '../../features/Auth/model/thunks';
 import SignOut from './SignOut/SignOut';
 import { useSigninMutation, useSignupMutation } from '../../features/Auth/api/authApi';
@@ -25,8 +25,8 @@ type AuthScreenProps = {
 const AuthScreen: React.FC<AuthScreenProps> = ({ authAction }) => {
   const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
-  const authStatus = useSelector((state: RootState) => state.auth.status);
-  const authError = useSelector((state: RootState) => state.auth.error);
+  // const authStatus = useSelector((state: RootState) => state.auth.status);
+  // const authError = useSelector((state: RootState) => state.auth.error);
 
   const [Signin, { isLoading: isSigninLoading, isError: isSigninError, error: signinError }] = useSigninMutation();
   const [Signup, { isLoading: isSignupLoading, isError: isSignupError, error: signupError }] = useSignupMutation();

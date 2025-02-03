@@ -1,8 +1,3 @@
-import { saveTokenToLocalStorage, removeTokenFromLocalStorage } from '../../../shared/lib/localStorage';
-import { baseApi } from '../../../shared/api/baseApi';
-import { userApi } from '../../../entities/User/model/api';
-import { setAuthenticated } from './slice';
-
 // export const authApi = baseApi.injectEndpoints({
 //   endpoints: (builder) => ({
 //     signin: builder.mutation<{ token: string }, { email: string; password: string }>({

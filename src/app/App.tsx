@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import cn from 'clsx';
 import style from './App.css';
 import Layout from './Layout/Layout';
@@ -13,25 +13,21 @@ import CartProvider from '../shared/providers/CartProvider/CartProvider';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from './store/store';
 import { setupAuthSync } from '../features/Auth/model/sync';
-import { getTokenFromLocalStorage } from '../shared/lib/localStorage';
+import { getAccessToken } from '../shared/lib/localStorage';
 import { getProfile } from '../entities/User/model/thunks';
 import { setAuthenticated } from '../features/Auth/model/slice';
 import menuItems from './menu/menuItems';
-import { getCategories } from '../entities/Category/model/thunks';
 
 function App() {
-  const [initialized, setInitialization] = useState(false);
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    if (getTokenFromLocalStorage()) {
+    if (getAccessToken()) {
       dispatch(getProfile());
-      const token = getTokenFromLocalStorage();
+      const token = getAccessToken();
       dispatch(setAuthenticated({ token }));
-      dispatch(getCategories(null));
     }
     setupAuthSync();
-    setInitialization(true);
   }, []);
 
   const generateRoutes = (items: typeof menuItems) => {
