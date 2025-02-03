@@ -8,7 +8,7 @@ import { AppDispatch, RootState } from '../../app/store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { signout } from '../../features/Auth/model/thunks';
 import SignOut from './SignOut/SignOut';
-import { useSigninMutation, useSignupMutation } from '../../features/Auth/model/api';
+import { useSigninMutation, useSignupMutation } from '../../features/Auth/api/authApi';
 import { useGetProfileQuery } from '../../entities/User/model/api';
 import { COMMAND_ID } from '../../shared/configs/api';
 

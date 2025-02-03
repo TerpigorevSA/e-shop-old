@@ -16,10 +16,10 @@ export const getAccessToken = () => {
   return localStorage.getItem(TOKEN_KEY);
 };
 
-export const saveTokens = (token: string) => {
+export const saveToken = (token: string) => {
   localStorage.setItem(TOKEN_KEY, token);
 };
 
-export const clearTokens = () => {
+export const clearToken = () => {
   localStorage.removeItem(TOKEN_KEY);
 };

@@ -2,6 +2,7 @@ import React, { ComponentType, FC } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store/store';
+import { getAccessToken } from '../lib/localStorage';
 
 export enum AuthenticationState {
   Authenticated = 'Authenticated',
@@ -23,7 +24,7 @@ export const WithAuthenticationState: FC<WithAuthenticationStateProps> = ({
   authenticationState,
   routes,
 }) => {
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const isAuthenticated = !!getAccessToken(); // TODO
   const isAdmin = true;
   // const isAdmin = useSelector((state: RootState) => state.user.currentUser?.isAdmin);
 
