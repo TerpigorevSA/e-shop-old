@@ -18,7 +18,7 @@ const Layout: FC<LayoutProps> = ({ menuItems }) => {
     <div className={cn(style.Layout)}>
       <Header>
         <div className={style.item}>
-          <Logo />
+          <Logo to={'/'} />
         </div>
         <div className={style.item}>
           <NavigationBar menuItems={menuItems} />
