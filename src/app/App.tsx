@@ -9,11 +9,13 @@ import ThemeProvider from '../shared/providers/ThemeProvider/ThemeProvider';
 import { LanguageProvider } from '../shared/providers/LanguageProvider/LanguageProvider';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from './store/store';
-import { setupAuthSync } from '../shared/lib/setupAuthSync';
+import { setupAuthSync } from './services/setupAuthSync';
 import { getAccessToken } from '../shared/lib/localStorage';
 // import { getProfile } from '../entities/User/model/thunks';
 import { setAuthenticated } from '../features/Auth/model/slice';
 import menuItems from './menu/menuItems';
+import { NavigationProvider } from './providers/NavigationProvider';
+import { ROUTES } from '../shared/configs/routes';
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -27,7 +29,7 @@ function App() {
     setupAuthSync();
   }, []);
 
-  const generateRoutes = (items: typeof menuItems) => {
+  const generateRoutes = (items: typeof menuItems, rootRoute: string, signInRoute: string) => {
     return [
       ...items.map((item) => {
         if (item.dropdown) {
@@ -38,13 +40,13 @@ function App() {
                 element={
                   <WithAuthenticationState
                     authenticationState={item.authenticationState}
-                    routes={{ root: '/', signIn: '/auth/SignIn' }}
+                    routes={{ root: rootRoute, signIn: signInRoute }}
                   >
                     {item.element}
                   </WithAuthenticationState>
                 }
               />
-              {generateRoutes(item.dropdown)}
+              {generateRoutes(item.dropdown, rootRoute, signInRoute)}
             </React.Fragment>
           );
         }
@@ -55,7 +57,7 @@ function App() {
               element={
                 <WithAuthenticationState
                   authenticationState={item.authenticationState}
-                  routes={{ root: '/', signIn: '/auth/SignIn' }}
+                  routes={{ root: rootRoute, signIn: signInRoute }}
                 >
                   {item.element}
                 </WithAuthenticationState>
@@ -70,13 +72,15 @@ function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <div className={cn(style.App)}>
-          <Routes>
-            <Route path="/" element={<Layout menuItems={menuItems} />}>
-              {generateRoutes(menuItems)}
-            </Route>
-          </Routes>
-        </div>
+        <NavigationProvider>
+          <div className={cn(style.App)}>
+            <Routes>
+              <Route path="/" element={<Layout menuItems={menuItems} />}>
+                {generateRoutes(menuItems, ROUTES.ROOT, ROUTES.SIGNIN)}
+              </Route>
+            </Routes>
+          </div>
+        </NavigationProvider>
       </LanguageProvider>
     </ThemeProvider>
   );

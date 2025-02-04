@@ -6,6 +6,7 @@ import styles from './AuthScreen.module.css';
 import { useTranslation } from 'react-i18next';
 import SignOut from './SignOut/SignOut';
 import useAuth from 'src/features/Auth/model/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 export enum AuthAction {
   SignIn = 'signIn',
@@ -19,11 +20,13 @@ type AuthScreenProps = {
 
 const AuthScreen: React.FC<AuthScreenProps> = ({ authAction }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const { signIn, signUp, signOut, isLoading, error } = useAuth();
 
   const handleSignInSubmit = (data: SignInFields) => {
     signIn(data.email, data.password);
+    navigate(-1);
   };
   const handleSignUpSubmit = (data: SignUpFields) => {
     signUp(data.email, data.password);
