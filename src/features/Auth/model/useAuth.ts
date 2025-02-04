@@ -3,7 +3,7 @@ import { clearToken, saveToken } from 'src/shared/lib/localStorage';
 import { COMMAND_ID } from 'src/shared/configs/api';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../app/store/store';
-import { setAuthenticated } from './slice';
+import { setAuthenticated, signout } from './slice';
 
 const useAuth = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -34,8 +34,7 @@ const useAuth = () => {
   };
 
   const signOut = () => {
-    clearToken();
-    dispatch(setAuthenticated(null));
+    dispatch(signout());
   };
 
   return {

@@ -24,7 +24,16 @@ const EditProductItem = withEditMode(ProductItem);
 const ProductsEditScreen: React.FC = () => {
   const { t } = useTranslation();
 
-  const [defaultItem] = useState<Product>({ id: '', name: '', photo: '' } as Product);
+  const [defaultItem] = useState<Product>({ 
+    id: null,
+    category: null,//categories[0],
+    name: '',
+    // desc: '',
+    price: 0,
+    // photo: '',
+    // oldPrice: 0,
+  } as Product);
+    
 
   // for categoties only
   const [categories, setCategories] = useState<Category[]>([]);
@@ -140,7 +149,7 @@ const ProductsEditScreen: React.FC = () => {
               name: editingItem.name,
               price: editingItem.price,
               description: editingItem.desc,
-              category: editingItem.category.name,
+              category: editingItem.category?.name,
               oldPrice: editingItem.oldPrice,
               photo: { url: editingItem.photo },
             }}

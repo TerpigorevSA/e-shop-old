@@ -9,14 +9,17 @@ import { AppDispatch, RootState } from '../../app/store/store';
 import { clearCart, setQuantity } from '../../features/Cart/model/slice';
 import { MutateOrderBody, MutateOrderProduct, OrderStatus, Product } from '../../shared/types/serverTypes';
 import Button from '../../shared/ui/Button/Button';
-import { createOrder } from '../../entities/Order/model/thunks';
+// import { createOrder } from '../../entities/Order/model/thunks';
 import { CartEntry } from 'src/entities/Cart/model/types';
+import { useCreateOrderMutation } from 'src/entities/Order/api/orderApi';
 
 const CartScreen: React.FC = () => {
   const { t } = useTranslation();
+
   const items = useSelector((state: RootState) => state.cart.currentCartEntries);
-  const createOrderStatus = useSelector((state: RootState) => state.cart.createOrderStatus);
-  const createOrdreError = useSelector((state: RootState) => state.cart.createOrdreError);
+
+  const [createOrder, {isLoading, isSuccess, error}] = useCreateOrderMutation();
+
   const dispatch: AppDispatch = useDispatch();
 
   const handleIncrement = useCallback(
@@ -66,23 +69,22 @@ const CartScreen: React.FC = () => {
       products: orderProducts,
       status: OrderStatus.PendingConfirmation,
     };
-    dispatch(createOrder(order));
-    /* do nothing */
+    createOrder(order);
   }, [items, dispatch]);
 
   const total = items.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
 
   useEffect(() => {
-    if (createOrderStatus === 'succeeded') {
+    if (isSuccess) {
       dispatch(clearCart());
     }
-  }, [createOrderStatus, dispatch]);
+  }, [isSuccess, dispatch]);
 
   if (items.length === 0) {
     return <div>{t('CartScreen.emptyCart')}</div>;
   }
 
-  if (createOrderStatus === 'loading') {
+  if (isLoading) {
     return <div>{t('CartScreen.loading')}</div>;
   }
 
@@ -101,7 +103,7 @@ const CartScreen: React.FC = () => {
       </div>
       <div className={cn(styles.footer)}>
         <div className={styles.error}>
-          {createOrdreError && (createOrdreError as string[]).map((str) => t(str)).join('\n')}
+          {error && (error as string[]).map((str) => t(str)).join('\n')}
         </div>
         {/* {createOrdreError && <div className={styles.error}>{(createOrdreError as string[]).map((str) => t(str)).join('\n')}</div>} */}
         <div className={cn(styles.orderWrapper)}>

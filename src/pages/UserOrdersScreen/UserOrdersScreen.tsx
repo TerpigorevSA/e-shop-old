@@ -11,13 +11,15 @@ import useDataListController from '../../shared/hooks/useDataListController';
 import { useCreateOrderMutation, useGetOrdersQuery, useUpdateOrderMutation } from '../../entities/Order/api/orderApi';
 import PageLayout from '../../shared/ui/PageLayout/PageLayout';
 import UserOrdersFiltersForm from './UserOrdersFiltersForm/UserOrdersFiltersForm';
+import { useGetProfileQuery } from 'src/entities/Profile/api/profileApi';
 
 const UserOrdersScreen: React.FC = () => {
-  const userId = useSelector((state: RootState) => state.user.currentUser?.id);
+  const {data,isUninitialized, isLoading:isLoadingProfile} = useGetProfileQuery();
+  const userId=data?.id;
 
   const [currentOrder, setCurrentOrder] = useState<Order | null>(null);
 
-  const { items, handlerPermanentFiltersChange, currentFilters, handlerFiltersChange, handlerFetchItems } =
+  const { items, handlerPermanentFiltersChange, currentFilters, handlerFiltersChange, handlerFetchItems, isLoading: isLoadingOrder } =
     useDataListController<Order, OrdersFilters, MutateOrderBody>(
       useGetOrdersQuery,
       useUpdateOrderMutation,
@@ -49,6 +51,10 @@ const UserOrdersScreen: React.FC = () => {
   const handleClick = (order: Order) => {
     setCurrentOrder((prev) => (prev === order ? null : order));
   };
+
+  if(isUninitialized||isLoadingOrder||isLoadingProfile){
+    return <div>{'loading'}</div>;
+  }
 
   return (
     <>

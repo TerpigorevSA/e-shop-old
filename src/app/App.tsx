@@ -9,9 +9,9 @@ import ThemeProvider from '../shared/providers/ThemeProvider/ThemeProvider';
 import { LanguageProvider } from '../shared/providers/LanguageProvider/LanguageProvider';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from './store/store';
-import { setupAuthSync } from '../features/Auth/model/sync';
+import { setupAuthSync } from '../shared/lib/setupAuthSync';
 import { getAccessToken } from '../shared/lib/localStorage';
-import { getProfile } from '../entities/User/model/thunks';
+// import { getProfile } from '../entities/User/model/thunks';
 import { setAuthenticated } from '../features/Auth/model/slice';
 import menuItems from './menu/menuItems';
 
@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
     if (getAccessToken()) {
-      dispatch(getProfile());
+      // dispatch(getProfile());
       const token = getAccessToken();
       dispatch(setAuthenticated({ token }));
     }

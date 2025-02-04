@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { CartEntry } from '../../../entities/Cart/model/types';
 import { resetState } from '../../../shared/actions/actions';
-import { createOrder } from '../../../entities/Order/model/thunks';
+import { authApi } from 'src/features/Auth/api/authApi';
+// import { createOrder } from '../../../entities/Order/model/thunks';
 
 interface CartEntryState {
   currentCartEntries: CartEntry[];
@@ -44,16 +45,16 @@ const cartEntrySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(resetState, () => initialState)
-      .addCase(createOrder.pending, (state) => {
+      .addMatcher(authApi.endpoints.signin.matchPending, (state, action) => {
         state.createOrderStatus = 'loading';
         state.createOrdreError = null;
       })
-      .addCase(createOrder.fulfilled, (state) => {
+      .addMatcher(authApi.endpoints.signin.matchFulfilled, (state, action) => {
         state.createOrderStatus = 'succeeded';
       })
-      .addCase(createOrder.rejected, (state, action) => {
+      .addMatcher(authApi.endpoints.signin.matchRejected, (state, action) => {
         state.createOrderStatus = 'failed';
-        state.createOrdreError = action.payload as string;
+        state.createOrdreError = action.payload as string[];
       });
   },
 });

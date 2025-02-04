@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { resetState } from '../../../shared/actions/actions';
+import { clearToken } from 'src/shared/lib/localStorage';
 
 interface AuthState {
   token: string | null;
@@ -19,6 +20,10 @@ const authSlice = createSlice({
       state.token = action.payload;
       state.isAuthenticated = !!action.payload;
     },
+    signout: () => {
+      setAuthenticated(null);
+      clearToken();
+    }
     // setUnauthenticated: (state) => {
     //   state.token = null;
     //   state.isAuthenticated = false;
@@ -64,5 +69,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAuthenticated } = authSlice.actions;
+export const { setAuthenticated, signout } = authSlice.actions;
 export default authSlice.reducer;
