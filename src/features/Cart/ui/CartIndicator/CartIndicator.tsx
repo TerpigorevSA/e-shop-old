@@ -10,7 +10,7 @@ const CartIndicator: React.FC = () => {
 
   return (
     <div className={style.wrapper}>
-      <img src={productsInCart > 0 ? cartFilledIco : cartEmptyIco} alt="cart" className={style.image} />
+      <img src={cartFilledIco} alt="cart" className={style.image} />
       {productsInCart > 0 && <span className={style.badge}>{productsInCart}</span>}
     </div>
   );
