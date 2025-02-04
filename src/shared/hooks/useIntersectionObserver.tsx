@@ -27,7 +27,7 @@ function useIntersectionObserve<T extends HTMLElement>(
         observer.unobserve(currentRef);
       }
     };
-  }, [options, ref, oneObserve]);
+  }, [options, ref, oneObserve, onIntersect]);
 }
 
 export default useIntersectionObserve;

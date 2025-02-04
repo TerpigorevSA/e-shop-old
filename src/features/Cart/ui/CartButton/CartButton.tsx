@@ -12,14 +12,7 @@ export type CartButtonProps = {
   onCountChange?: (value: number) => void;
 };
 
-const CartButton: FC<CartButtonProps> = ({
-  count,
-  max,
-  disabled,
-  onCountChange = (value: number) => {
-    /* do nothing */
-  },
-}) => {
+const CartButton: FC<CartButtonProps> = ({ count, max, disabled, onCountChange }) => {
   const { t } = useTranslation();
 
   return (

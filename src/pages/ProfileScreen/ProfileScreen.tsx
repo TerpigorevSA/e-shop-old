@@ -4,8 +4,6 @@ import ChangePassword, { ChangePasswordFields } from './ChangePassword/ChangePas
 import cn from 'clsx';
 import styles from './ProfileScreen.module.css';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../app/store/store';
 import {
   useChangePasswordMutation,
   useGetProfileQuery,
@@ -18,8 +16,6 @@ const ProfileScreen: React.FC = () => {
   const { data: currentUser, isLoading: profileIsLoading, isUninitialized, error: profileError } = useGetProfileQuery();
   const [updateProfile, { error: updateProfileError }] = useUpdateProfileMutation();
   const [changePassword, { error: changePasswordError }] = useChangePasswordMutation();
-
-  const dispatch: AppDispatch = useDispatch();
 
   const handleEditProfileSubmit = useCallback(async (data: EditProfileFields) => {
     await updateProfile({ name: data.userName });

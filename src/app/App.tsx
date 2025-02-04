@@ -7,9 +7,6 @@ import { Route, Routes } from 'react-router-dom';
 import { WithAuthenticationState } from '../shared/hocs/withAuthenticationState';
 import ThemeProvider from '../shared/providers/ThemeProvider/ThemeProvider';
 import { LanguageProvider } from '../shared/providers/LanguageProvider/LanguageProvider';
-import AuthProvider from '../shared/providers/AuthProvider/AuthProvider';
-import ProductsProvider from '../shared/providers/ProductsProvider/ProductsProvider';
-import CartProvider from '../shared/providers/CartProvider/CartProvider';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from './store/store';
 import { setupAuthSync } from '../features/Auth/model/sync';
@@ -73,19 +70,13 @@ function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <AuthProvider>
-          <ProductsProvider>
-            <CartProvider>
-              <div className={cn(style.App)}>
-                <Routes>
-                  <Route path="/" element={<Layout menuItems={menuItems} />}>
-                    {generateRoutes(menuItems)}
-                  </Route>
-                </Routes>
-              </div>
-            </CartProvider>
-          </ProductsProvider>
-        </AuthProvider>
+        <div className={cn(style.App)}>
+          <Routes>
+            <Route path="/" element={<Layout menuItems={menuItems} />}>
+              {generateRoutes(menuItems)}
+            </Route>
+          </Routes>
+        </div>
       </LanguageProvider>
     </ThemeProvider>
   );

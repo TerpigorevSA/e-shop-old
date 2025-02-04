@@ -4,13 +4,13 @@ import cn from 'clsx';
 import styles from './CartScreen.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import ComponentFetchList from '../../shared/ui/ComponentFetchList/ComponentFetchList';
-import { CartEntry } from '../../shared/providers/CartProvider/CartProvider';
 import CartItem from '../../features/Cart/ui/CartItem/CartItem';
 import { AppDispatch, RootState } from '../../app/store/store';
 import { clearCart, setQuantity } from '../../features/Cart/model/slice';
 import { MutateOrderBody, MutateOrderProduct, OrderStatus, Product } from '../../shared/types/serverTypes';
 import Button from '../../shared/ui/Button/Button';
 import { createOrder } from '../../entities/Order/model/thunks';
+import { CartEntry } from 'src/entities/Cart/model/types';
 
 const CartScreen: React.FC = () => {
   const { t } = useTranslation();

@@ -21,8 +21,6 @@ import useDataListController from '../../shared/hooks/useDataListController';
 
 const EditProductItem = withEditMode(ProductItem);
 
-const PAGE_SIZE = 5;
-
 const ProductsEditScreen: React.FC = () => {
   const { t } = useTranslation();
 
@@ -65,10 +63,7 @@ const ProductsEditScreen: React.FC = () => {
     currentFilters,
     handlerFiltersChange,
     handlerFetchItems,
-    isFetching,
     isLoading,
-    isError,
-    isSuccess,
     error,
     editingItem,
     handlerEditItem,
@@ -152,7 +147,8 @@ const ProductsEditScreen: React.FC = () => {
             categories={categoryNames}
             onSubmit={(data) => {
               const categoryId = categories.find((category) => category.name === data.category).id;
-              const { category: _, description: desc, photo, ...rest } = data;
+              const { category: _category, description: desc, photo, ...rest } = data;
+              void _category;
               handlerEditItem(editingItem.id, {
                 ...rest,
                 desc,

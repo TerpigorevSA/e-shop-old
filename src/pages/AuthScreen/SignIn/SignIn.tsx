@@ -21,8 +21,6 @@ export const SingIn: React.FC<SignInProps> = ({ onSubmit }) => {
   } = useForm();
   const { t } = useTranslation();
 
-  const passwordLength = 8;
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={cn(styles.form)}>
       <div>

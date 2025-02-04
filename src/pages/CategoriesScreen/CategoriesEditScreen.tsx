@@ -19,7 +19,6 @@ import CategoriesFiltersForm from './CategoriesFilterForm/CategoriesFilterForm';
 import useDataListController from '../../shared/hooks/useDataListController';
 
 const EditCategoryItem = withEditMode(CategoryItem);
-const PAGE_SIZE = 10;
 
 const CategoriesEditScreen: React.FC = () => {
   const { t } = useTranslation();
@@ -28,12 +27,8 @@ const CategoriesEditScreen: React.FC = () => {
 
   const {
     items,
-    currentFilters,
     handlerFiltersChange,
     handlerFetchItems,
-    isFetching,
-    isLoading,
-    isError,
     isSuccess,
     error,
     editingItem,

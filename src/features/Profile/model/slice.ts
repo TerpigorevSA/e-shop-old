@@ -24,7 +24,7 @@ const ProfileSlice = createSlice({
         state.status = 'loading';
         state.error = null;
       })
-      .addCase(getProfile.fulfilled, (state, action) => {
+      .addCase(getProfile.fulfilled, (state) => {
         state.status = 'succeeded';
       })
       .addCase(getProfile.rejected, (state, action) => {
@@ -35,7 +35,7 @@ const ProfileSlice = createSlice({
         state.status = 'loading';
         state.error = null;
       })
-      .addCase(updateProfile.fulfilled, (state, action) => {
+      .addCase(updateProfile.fulfilled, (state) => {
         state.status = 'succeeded';
       })
       .addCase(updateProfile.rejected, (state, action) => {
@@ -46,7 +46,7 @@ const ProfileSlice = createSlice({
         state.status = 'loading';
         state.error = null;
       })
-      .addCase(changePassword.fulfilled, (state, action) => {
+      .addCase(changePassword.fulfilled, (state) => {
         state.status = 'succeeded';
       })
       .addCase(changePassword.rejected, (state, action) => {

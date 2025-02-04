@@ -23,7 +23,6 @@ const CategoryEditForm: React.FC<CategoryEditFormProps> = ({ onSubmit, defaultVa
   const {
     register,
     handleSubmit,
-    control,
     setValue,
     clearErrors,
     setError,

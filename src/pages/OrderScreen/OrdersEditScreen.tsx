@@ -1,9 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import cn from 'clsx';
 import styles from './OrdersEditScreen.module.css';
-import { useTranslation } from 'react-i18next';
-import { AppDispatch } from '../../app/store/store';
-import { useDispatch } from 'react-redux';
 import { MutateOrderBody, Order, OrdersFilters, OrderStatus } from '../../shared/types/serverTypes';
 import OrderProductItem from '../../entities/Product/ui/OrderProductItem/OrderProductItem';
 import ComponentFetchList from 'src/shared/ui/ComponentFetchList/ComponentFetchList';
@@ -14,32 +11,13 @@ import PageLayout from '../../shared/ui/PageLayout/PageLayout';
 import OrdersFiltersForm from './OrdersFiltersForm/OrdersFiltersForm';
 
 const OrdersEditScreen: React.FC = () => {
-  const { t } = useTranslation();
-  const dispatch: AppDispatch = useDispatch();
-
   const [currentOrder, setCurrentOrder] = useState<Order | null>(null);
 
-  const {
-    items,
-    handlerPermanentFiltersChange,
-    currentFilters,
-    handlerFiltersChange,
-    handlerFetchItems,
-    isFetching,
-    isLoading,
-    isError,
-    isSuccess,
-    error,
-    editingItem,
-    handlerEditItem,
-    handlerAddClick,
-    handlerEditClick,
-    clearEditItem,
-  } = useDataListController<Order, OrdersFilters, MutateOrderBody>(
-    useGetOrdersQuery,
-    useUpdateOrderMutation,
-    useCreateOrderMutation
-  );
+  const { items, currentFilters, handlerFiltersChange, handlerFetchItems, handlerEditItem } = useDataListController<
+    Order,
+    OrdersFilters,
+    MutateOrderBody
+  >(useGetOrdersQuery, useUpdateOrderMutation, useCreateOrderMutation);
 
   const handlerStatusChange = useCallback(
     (status: OrderStatus, item: Order) => {

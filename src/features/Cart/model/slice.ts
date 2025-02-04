@@ -37,7 +37,7 @@ const cartEntrySlice = createSlice({
         state.currentCartEntries = [...state.currentCartEntries, { product: action.payload.product, quantity: 1 }];
       }
     },
-    clearCart: (state) => {
+    clearCart: () => {
       return initialState;
     },
   },
@@ -48,7 +48,7 @@ const cartEntrySlice = createSlice({
         state.createOrderStatus = 'loading';
         state.createOrdreError = null;
       })
-      .addCase(createOrder.fulfilled, (state, action) => {
+      .addCase(createOrder.fulfilled, (state) => {
         state.createOrderStatus = 'succeeded';
       })
       .addCase(createOrder.rejected, (state, action) => {

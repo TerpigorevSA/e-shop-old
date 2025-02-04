@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import cn from 'clsx';
 import styles from './UserOrdersScreen.module.css';
-import { useTranslation } from 'react-i18next';
-import { AppDispatch, RootState } from '../../app/store/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../app/store/store';
+import { useSelector } from 'react-redux';
 import OrderItem from '../../entities/Order/ui/OrderItem/OrderItem';
 import { MutateOrderBody, Order, OrdersFilters } from '../../shared/types/serverTypes';
 import OrderProductItem from '../../entities/Product/ui/OrderProductItem/OrderProductItem';
@@ -14,33 +13,16 @@ import PageLayout from '../../shared/ui/PageLayout/PageLayout';
 import UserOrdersFiltersForm from './UserOrdersFiltersForm/UserOrdersFiltersForm';
 
 const UserOrdersScreen: React.FC = () => {
-  const { t } = useTranslation();
-  const dispatch: AppDispatch = useDispatch();
   const userId = useSelector((state: RootState) => state.user.currentUser?.id);
 
   const [currentOrder, setCurrentOrder] = useState<Order | null>(null);
 
-  const {
-    items,
-    handlerPermanentFiltersChange,
-    currentFilters,
-    handlerFiltersChange,
-    handlerFetchItems,
-    isFetching,
-    isLoading,
-    isError,
-    isSuccess,
-    error,
-    editingItem,
-    handlerEditItem,
-    handlerAddClick,
-    handlerEditClick,
-    clearEditItem,
-  } = useDataListController<Order, OrdersFilters, MutateOrderBody>(
-    useGetOrdersQuery,
-    useUpdateOrderMutation,
-    useCreateOrderMutation
-  );
+  const { items, handlerPermanentFiltersChange, currentFilters, handlerFiltersChange, handlerFetchItems } =
+    useDataListController<Order, OrdersFilters, MutateOrderBody>(
+      useGetOrdersQuery,
+      useUpdateOrderMutation,
+      useCreateOrderMutation
+    );
 
   useEffect(() => {
     handlerPermanentFiltersChange({ userId: userId });

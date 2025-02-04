@@ -50,14 +50,7 @@ const CatalogScreen: React.FC = () => {
   const firstRender = useRef(true);
   const [reset, setReset] = useState(true);
 
-  const {
-    data: ResponseData,
-    isFetching,
-    isLoading,
-    isError,
-    isSuccess,
-    error,
-  } = useGetProductsQuery({ ...currentFilters, pagination });
+  const { data: ResponseData, isFetching, error } = useGetProductsQuery({ ...currentFilters, pagination });
 
   const data = ResponseData?.data;
   const serverPagination = ResponseData?.pagination;
@@ -71,7 +64,7 @@ const CatalogScreen: React.FC = () => {
   const handleFiltersChange = useCallback((filters: ProductsFilters) => {
     setCurrentFilters(filters);
     setPagination((prev) => ({ ...prev, pageNumber: 1 }));
-    setItems((prev) => []);
+    setItems([]);
     firstRender.current = true;
     setReset((prev) => !prev);
   }, []);
