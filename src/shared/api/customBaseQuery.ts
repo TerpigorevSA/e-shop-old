@@ -10,7 +10,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: 'https://19429ba06ff2.vps.myjino.ru/api',
   prepareHeaders: (headers) => {
     const token = getTokenFromLocalStorage();
-    debugger;
+    // debugger;
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);
     }
@@ -26,9 +26,13 @@ export const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBase
   const result = await baseQuery(args, api, extraOptions);
   if (result.error) {
     const fetchError = result.error as FetchBaseQueryError;
-    console.log(fetchError.status, isNumber(fetchError.status));
-    if (isNumber(fetchError.status) && (fetchError.status === 401 || fetchError.status === 403)) {
-      navigateTo(ROUTES.SIGNIN);
+    if (isNumber(fetchError.status)) {
+      if(fetchError.status === 401 ) {
+        navigateTo(ROUTES.AUTHENTICATED_SIGNIN);
+      }
+      if(fetchError.status===404||fetchError.status>=500){
+        throw result.error
+      }
     }
     if (fetchError.data) {
       return { error: errorsToStrings(fetchError.data) };

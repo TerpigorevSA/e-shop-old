@@ -16,7 +16,7 @@ export const errorsToStrings = (error: unknown): string[] => {
   return [`Unknown error: ${error}`];
 };
 
-const isServerError = (error: unknown): error is ServerErrors => {
+export const isServerError = (error: unknown): error is ServerErrors => {
   return (
     typeof error === 'object' && error !== null && 'errors' in error && Array.isArray((error as ServerErrors).errors)
   );

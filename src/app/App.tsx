@@ -16,6 +16,8 @@ import { setAuthenticated } from '../features/Auth/model/slice';
 import menuItems from './menu/menuItems';
 import { NavigationProvider } from './providers/NavigationProvider';
 import { ROUTES } from '../shared/configs/routes';
+import AuthScreen, { AuthAction } from 'src/pages/AuthScreen/AuthScreen';
+import { ErrorBoundary } from './providers/ErrorBoundary';
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -73,13 +75,16 @@ function App() {
     <ThemeProvider>
       <LanguageProvider>
         <NavigationProvider>
+          <ErrorBoundary>
           <div className={cn(style.App)}>
             <Routes>
               <Route path="/" element={<Layout menuItems={menuItems} />}>
                 {generateRoutes(menuItems, ROUTES.ROOT, ROUTES.SIGNIN)}
+                <Route path={ROUTES.AUTHENTICATED_SIGNIN} element={<AuthScreen authAction={AuthAction.SignIn} />} />
               </Route>
             </Routes>
           </div>
+          </ErrorBoundary>
         </NavigationProvider>
       </LanguageProvider>
     </ThemeProvider>
