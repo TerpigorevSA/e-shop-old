@@ -18,7 +18,7 @@ const CartScreen: React.FC = () => {
 
   const items = useSelector((state: RootState) => state.cart.currentCartEntries);
 
-  const [createOrder, {isLoading, isSuccess, error}] = useCreateOrderMutation();
+  const [createOrder, { isLoading, isSuccess, error }] = useCreateOrderMutation();
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -102,9 +102,7 @@ const CartScreen: React.FC = () => {
         />
       </div>
       <div className={cn(styles.footer)}>
-        <div className={styles.error}>
-          {error && (error as string[]).map((str) => t(str)).join('\n')}
-        </div>
+        <div className={styles.error}>{error && (error as string[]).map((str) => t(str)).join('\n')}</div>
         {/* {createOrdreError && <div className={styles.error}>{(createOrdreError as string[]).map((str) => t(str)).join('\n')}</div>} */}
         <div className={cn(styles.orderWrapper)}>
           <div className={cn(styles.totalTitle)}>

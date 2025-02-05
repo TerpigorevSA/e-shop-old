@@ -24,11 +24,15 @@ const AuthScreen: React.FC<AuthScreenProps> = ({ authAction }) => {
 
   const { signIn, signUp, signOut, isLoading, error } = useAuth();
 
-  const handleSignInSubmit = (data: SignInFields) => {
+  const handleSignInSubmit = (data: SignInFields, e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     signIn(data.email, data.password);
-    navigate(-1);
+    if (!error) {
+      navigate(-1);
+    }
   };
-  const handleSignUpSubmit = (data: SignUpFields) => {
+  const handleSignUpSubmit = (data: SignUpFields, e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     signUp(data.email, data.password);
   };
 

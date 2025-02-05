@@ -10,7 +10,7 @@ export type EditProfileFields = {
 };
 
 type EditProfileProps = {
-  onSubmit: (data: EditProfileFields) => void;
+  onSubmit: (data: EditProfileFields, e: React.FormEvent<HTMLFormElement>) => void;
   defaultValues?: EditProfileFields;
 };
 

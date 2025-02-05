@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import cn from 'clsx';
 import styles from './UserOrdersScreen.module.css';
-import { RootState } from '../../app/store/store';
-import { useSelector } from 'react-redux';
 import OrderItem from '../../entities/Order/ui/OrderItem/OrderItem';
 import { MutateOrderBody, Order, OrdersFilters } from '../../shared/types/serverTypes';
 import OrderProductItem from '../../entities/Product/ui/OrderProductItem/OrderProductItem';
@@ -14,17 +12,23 @@ import UserOrdersFiltersForm from './UserOrdersFiltersForm/UserOrdersFiltersForm
 import { useGetProfileQuery } from 'src/entities/Profile/api/profileApi';
 
 const UserOrdersScreen: React.FC = () => {
-  const {data,isUninitialized, isLoading:isLoadingProfile} = useGetProfileQuery();
-  const userId=data?.id;
+  const { data, isUninitialized, isLoading: isLoadingProfile } = useGetProfileQuery();
+  const userId = data?.id;
 
   const [currentOrder, setCurrentOrder] = useState<Order | null>(null);
 
-  const { items, handlerPermanentFiltersChange, currentFilters, handlerFiltersChange, handlerFetchItems, isLoading: isLoadingOrder } =
-    useDataListController<Order, OrdersFilters, MutateOrderBody>(
-      useGetOrdersQuery,
-      useUpdateOrderMutation,
-      useCreateOrderMutation
-    );
+  const {
+    items,
+    handlerPermanentFiltersChange,
+    currentFilters,
+    handlerFiltersChange,
+    handlerFetchItems,
+    isLoading: isLoadingOrder,
+  } = useDataListController<Order, OrdersFilters, MutateOrderBody>(
+    useGetOrdersQuery,
+    useUpdateOrderMutation,
+    useCreateOrderMutation
+  );
 
   useEffect(() => {
     handlerPermanentFiltersChange({ userId: userId });
@@ -52,7 +56,7 @@ const UserOrdersScreen: React.FC = () => {
     setCurrentOrder((prev) => (prev === order ? null : order));
   };
 
-  if(isUninitialized||isLoadingOrder||isLoadingProfile){
+  if (isUninitialized || isLoadingOrder || isLoadingProfile) {
     return <div>{'loading'}</div>;
   }
 

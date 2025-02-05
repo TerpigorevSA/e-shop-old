@@ -27,11 +27,11 @@ export const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBase
   if (result.error) {
     const fetchError = result.error as FetchBaseQueryError;
     if (isNumber(fetchError.status)) {
-      if(fetchError.status === 401 ) {
+      if (fetchError.status === 401) {
         navigateTo(ROUTES.AUTHENTICATED_SIGNIN);
       }
-      if(fetchError.status===404||fetchError.status>=500){
-        throw result.error
+      if (fetchError.status === 404 || fetchError.status >= 500) {
+        throw result.error;
       }
     }
     if (fetchError.data) {
@@ -46,4 +46,4 @@ export const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBase
 
 const isNumber = (value: unknown): value is number => {
   return typeof value === 'number';
-}
+};

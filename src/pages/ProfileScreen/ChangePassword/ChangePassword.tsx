@@ -12,7 +12,7 @@ export type ChangePasswordFields = {
 };
 
 type ChangePasswordProps = {
-  onSubmit: (data: ChangePasswordFields) => void;
+  onSubmit: (data: ChangePasswordFields, e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 const ChangePassword: React.FC<ChangePasswordProps> = ({ onSubmit }) => {

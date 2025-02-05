@@ -11,7 +11,7 @@ export type SignInFields = {
 };
 
 type SignInProps = {
-  onSubmit: (data: SignInFields) => void;
+  onSubmit: (data: SignInFields, e: React.FormEvent<HTMLFormElement>) => void;
 };
 export const SingIn: React.FC<SignInProps> = ({ onSubmit }) => {
   const {

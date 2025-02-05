@@ -17,13 +17,18 @@ const ProfileScreen: React.FC = () => {
   const [updateProfile, { error: updateProfileError }] = useUpdateProfileMutation();
   const [changePassword, { error: changePasswordError }] = useChangePasswordMutation();
 
-  const handleEditProfileSubmit = useCallback(async (data: EditProfileFields) => {
+  const handleEditProfileSubmit = useCallback(async (data: EditProfileFields, e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     await updateProfile({ name: data.userName });
   }, []);
 
-  const handleChangePasswordSubmit = useCallback(async (data: ChangePasswordFields) => {
-    await changePassword({ password: data.oldPassword, newPassword: data.newPassword });
-  }, []);
+  const handleChangePasswordSubmit = useCallback(
+    async (data: ChangePasswordFields, e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      await changePassword({ password: data.oldPassword, newPassword: data.newPassword });
+    },
+    []
+  );
 
   if (isUninitialized || profileIsLoading) {
     return <div>{'loading'}</div>;

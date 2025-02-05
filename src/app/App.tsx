@@ -76,14 +76,14 @@ function App() {
       <LanguageProvider>
         <NavigationProvider>
           <ErrorBoundary>
-          <div className={cn(style.App)}>
-            <Routes>
-              <Route path="/" element={<Layout menuItems={menuItems} />}>
-                {generateRoutes(menuItems, ROUTES.ROOT, ROUTES.SIGNIN)}
-                <Route path={ROUTES.AUTHENTICATED_SIGNIN} element={<AuthScreen authAction={AuthAction.SignIn} />} />
-              </Route>
-            </Routes>
-          </div>
+            <div className={cn(style.App)}>
+              <Routes>
+                <Route path="/" element={<Layout menuItems={menuItems} />}>
+                  {generateRoutes(menuItems, ROUTES.ROOT, ROUTES.SIGNIN)}
+                  <Route path={ROUTES.AUTHENTICATED_SIGNIN} element={<AuthScreen authAction={AuthAction.SignIn} />} />
+                </Route>
+              </Routes>
+            </div>
           </ErrorBoundary>
         </NavigationProvider>
       </LanguageProvider>

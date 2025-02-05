@@ -1,5 +1,5 @@
 import { useSigninMutation, useSignupMutation } from '../api/authApi';
-import { clearToken, saveToken } from 'src/shared/lib/localStorage';
+import { saveToken } from 'src/shared/lib/localStorage';
 import { COMMAND_ID } from 'src/shared/configs/api';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../app/store/store';

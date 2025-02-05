@@ -12,7 +12,7 @@ export type SignUpFields = {
 };
 
 type SignUpProps = {
-  onSubmit: (data: SignUpFields) => void;
+  onSubmit: (data: SignUpFields, e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 export const SingUp: React.FC<SignUpProps> = ({ onSubmit }) => {

@@ -1,6 +1,5 @@
 import React from 'react';
 import style from './CartIndicator.module.css';
-import cartEmptyIco from '../../../../shared/assets/shopping_cart_off_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg';
 import cartFilledIco from '../../../../shared/assets/shopping_cart_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../app/store/store';

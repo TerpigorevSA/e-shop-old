@@ -24,16 +24,15 @@ const EditProductItem = withEditMode(ProductItem);
 const ProductsEditScreen: React.FC = () => {
   const { t } = useTranslation();
 
-  const [defaultItem] = useState<Product>({ 
+  const [defaultItem] = useState<Product>({
     id: null,
-    category: null,//categories[0],
+    category: null, //categories[0],
     name: '',
     // desc: '',
     price: 0,
     // photo: '',
     // oldPrice: 0,
   } as Product);
-    
 
   // for categoties only
   const [categories, setCategories] = useState<Category[]>([]);

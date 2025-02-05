@@ -1,5 +1,5 @@
-import React from 'react';
-import { Component, ErrorInfo, ReactNode } from 'react';
+import React, { Component, ErrorInfo, ReactNode } from 'react';
+
 import { errorsToStrings } from 'src/shared/lib/errorsToStrings';
 
 interface ErrorBoundaryProps {
@@ -16,7 +16,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   };
 
   static getDerivedStateFromError(error: unknown): ErrorBoundaryState {
-    return { error: new Error(errorsToStrings(error).join(",\n")) };
+    return { error: new Error(errorsToStrings(error).join(',\n')) };
   }
 
   componentDidCatch(error: unknown, errorInfo: ErrorInfo) {
@@ -29,14 +29,11 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   render() {
     if (this.state.error) {
-        console.log("try render error boundary")
+      console.log('try render error boundary');
       return (
-        <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <span>{this.state.error.message}</span>
-            <button onClick={this.handlerRetry}>
-              Здесь могла быть ваша реклама
-            </button>
-          
+          <button onClick={this.handlerRetry}>Здесь могла быть ваша реклама</button>
         </div>
       );
     }

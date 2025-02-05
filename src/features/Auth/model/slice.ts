@@ -20,10 +20,11 @@ const authSlice = createSlice({
       state.token = action.payload;
       state.isAuthenticated = !!action.payload;
     },
-    signout: () => {
-      setAuthenticated(null);
+    signout: (state) => {
+      state.token = null;
+      state.isAuthenticated = false;
       clearToken();
-    }
+    },
     // setUnauthenticated: (state) => {
     //   state.token = null;
     //   state.isAuthenticated = false;
