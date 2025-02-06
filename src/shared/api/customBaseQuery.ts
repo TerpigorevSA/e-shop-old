@@ -5,6 +5,7 @@ import { errorsToStrings } from '../lib/errorsToStrings';
 import { getTokenFromLocalStorage } from '../lib/localStorage';
 import { navigateTo } from '../lib/navigationService';
 import { ROUTES } from '../configs/routes';
+import { isNumber } from '../lib/errorsCast';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://19429ba06ff2.vps.myjino.ru/api',
@@ -26,12 +27,14 @@ export const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBase
   const result = await baseQuery(args, api, extraOptions);
   if (result.error) {
     const fetchError = result.error as FetchBaseQueryError;
+    console.log("fetchError", fetchError)
     if (isNumber(fetchError.status)) {
       if (fetchError.status === 401) {
         navigateTo(ROUTES.AUTHENTICATED_SIGNIN);
       }
       if (fetchError.status === 404 || fetchError.status >= 500) {
-        throw result.error;
+        // throw result.error;
+        return { error: fetchError };
       }
     }
     if (fetchError.data) {
@@ -42,8 +45,4 @@ export const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBase
   }
 
   return result;
-};
-
-const isNumber = (value: unknown): value is number => {
-  return typeof value === 'number';
 };

@@ -1,4 +1,5 @@
 import { ServerErrors } from '../types/serverTypes';
+import { isServerError } from './errorsCast';
 import { getLocalizedErrorMessage } from './errorsParsing';
 
 export const errorsToStrings = (error: unknown): string[] => {
@@ -14,10 +15,4 @@ export const errorsToStrings = (error: unknown): string[] => {
 
   console.error('Unhandled error:', error);
   return [`Unknown error: ${error}`];
-};
-
-export const isServerError = (error: unknown): error is ServerErrors => {
-  return (
-    typeof error === 'object' && error !== null && 'errors' in error && Array.isArray((error as ServerErrors).errors)
-  );
 };

@@ -7,6 +7,9 @@ import type {
   TypedUseMutation,
   TypedUseQuery,
 } from '@reduxjs/toolkit/query/react';
+import { canCastToExtendedFetchError, canCastToFetchError } from '../lib/errorsCast';
+import { errorsToStrings } from '../lib/errorsToStrings';
+import { unexpectedErrorBounce } from '../lib/unexpectedErrorBounce';
 
 const PAGE_SIZE = 4;
 
@@ -83,7 +86,7 @@ const useDataListController = <TItem extends { id: string }, TFilters, MutateBod
         return;
       }
       if (id) {
-        updateItem({ id, body: data })
+        updateItem({ id:"651c272f8a42911d60f03071", body: data })
           .then((res) => {
             if (res.data) {
               setItems((prev) => prev.map((item) => (item.id === res.data.id ? res.data : item)));
@@ -120,6 +123,11 @@ const useDataListController = <TItem extends { id: string }, TFilters, MutateBod
     setReset((prev) => !prev);
   }, []);
 
+
+  unexpectedErrorBounce(errorQuery);
+  unexpectedErrorBounce(errorCreate);
+  unexpectedErrorBounce(errorUpdate);
+  
   return {
     items,
     permanentFilters,
