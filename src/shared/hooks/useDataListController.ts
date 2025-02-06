@@ -86,7 +86,8 @@ const useDataListController = <TItem extends { id: string }, TFilters, MutateBod
         return;
       }
       if (id) {
-        updateItem({ id:"651c272f8a42911d60f03071", body: data })
+        updateItem({ id, body: data })
+        // updateItem({ id:"651c272f8a42911d60f03071", body: data })
           .then((res) => {
             if (res.data) {
               setItems((prev) => prev.map((item) => (item.id === res.data.id ? res.data : item)));

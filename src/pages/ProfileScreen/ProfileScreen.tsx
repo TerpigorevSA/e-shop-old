@@ -9,6 +9,7 @@ import {
   useGetProfileQuery,
   useUpdateProfileMutation,
 } from '../../entities/Profile/api/profileApi';
+import { Loader } from 'src/shared/ui/Loader/Loader';
 
 const ProfileScreen: React.FC = () => {
   const { t } = useTranslation();
@@ -31,7 +32,8 @@ const ProfileScreen: React.FC = () => {
   );
 
   if (isUninitialized || profileIsLoading) {
-    return <div>{'loading'}</div>;
+    // return <div>{'loading'}</div>;
+    return <Loader />;
   }
 
   const error = [

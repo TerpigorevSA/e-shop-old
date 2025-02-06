@@ -12,6 +12,7 @@ import CatalogFiltersForm from './CatalogFiltersForm/CatalogFiltersForm';
 import { useGetProductsQuery } from '../../entities/Product/api/productApi';
 import { useGetCategoriesQuery } from '../../entities/Category/api/categoryApi';
 import { useTranslation } from 'react-i18next';
+import { Loader } from 'src/shared/ui/Loader/Loader';
 
 const PAGE_SIZE = 5;
 
@@ -125,7 +126,7 @@ const CatalogScreen: React.FC = () => {
             />
           </>
         ) : (
-          <div>Loading...</div>
+          <Loader />
         )
       }
     >

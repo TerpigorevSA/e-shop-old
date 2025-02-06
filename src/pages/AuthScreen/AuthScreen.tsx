@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import SignOut from './SignOut/SignOut';
 import useAuth from 'src/features/Auth/model/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { Loader } from 'src/shared/ui/Loader/Loader';
 
 export enum AuthAction {
   SignIn = 'signIn',
@@ -39,7 +40,8 @@ const AuthScreen: React.FC<AuthScreenProps> = ({ authAction }) => {
   const handleSignOut = () => signOut();
 
   if (isLoading) {
-    return <div>{'loading'}</div>;
+    // return <div>{'loading'}</div>;
+    return <Loader />;
   }
 
   const signInContent = <>{authAction === AuthAction.SignIn && <SignIn onSubmit={handleSignInSubmit} />}</>;

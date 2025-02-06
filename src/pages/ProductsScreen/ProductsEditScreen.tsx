@@ -18,6 +18,7 @@ import ProductsFiltersForm from './ProductsFiltersForm/ProductsFiltersForm';
 import Modal from '../../shared/ui/Modal/Modal';
 import ProductEditForm from '../../features/forms/ProductEditForm/ProductEditForm';
 import useDataListController from '../../shared/hooks/useDataListController';
+import { Loader } from 'src/shared/ui/Loader/Loader';
 
 const EditProductItem = withEditMode(ProductItem);
 
@@ -133,7 +134,7 @@ const ProductsEditScreen: React.FC = () => {
               />
             </>
           ) : (
-            <div>Loading...</div>
+            <Loader />
           )
         }
       >

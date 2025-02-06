@@ -12,6 +12,7 @@ import Button from '../../shared/ui/Button/Button';
 // import { createOrder } from '../../entities/Order/model/thunks';
 import { CartEntry } from 'src/entities/Cart/model/types';
 import { useCreateOrderMutation } from 'src/entities/Order/api/orderApi';
+import { Loader } from 'src/shared/ui/Loader/Loader';
 
 const CartScreen: React.FC = () => {
   const { t } = useTranslation();
@@ -85,7 +86,8 @@ const CartScreen: React.FC = () => {
   }
 
   if (isLoading) {
-    return <div>{t('CartScreen.loading')}</div>;
+    // return <div>{t('CartScreen.loading')}</div>;
+    return <Loader />;
   }
 
   return (

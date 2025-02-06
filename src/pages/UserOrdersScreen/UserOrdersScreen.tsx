@@ -10,6 +10,7 @@ import { useCreateOrderMutation, useGetOrdersQuery, useUpdateOrderMutation } fro
 import PageLayout from '../../shared/ui/PageLayout/PageLayout';
 import UserOrdersFiltersForm from './UserOrdersFiltersForm/UserOrdersFiltersForm';
 import { useGetProfileQuery } from 'src/entities/Profile/api/profileApi';
+import { Loader } from 'src/shared/ui/Loader/Loader';
 
 const UserOrdersScreen: React.FC = () => {
   const { data, isUninitialized, isLoading: isLoadingProfile } = useGetProfileQuery();
@@ -57,7 +58,8 @@ const UserOrdersScreen: React.FC = () => {
   };
 
   if (isUninitialized || isLoadingOrder || isLoadingProfile) {
-    return <div>{'loading'}</div>;
+    // return <div>{'loading'}</div>;
+    return <Loader />;
   }
 
   return (
