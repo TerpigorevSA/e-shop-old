@@ -31,7 +31,8 @@ module.exports = (_, args) => {
     entry: './index.tsx',
     output: {
       path: dist,
-      publicPath: args.mode === 'development' ? `http://${host}:${port}/` : 'https://juczken.github.io/e-shop-old/',
+      publicPath:
+        args.mode === 'development' ? `http://${host}:${port}/` : 'https://terpigorevsa.github.io/e-shop-old/',
       filename: `js/[name].js`,
       chunkFilename: `js/[name].js`,
     },
