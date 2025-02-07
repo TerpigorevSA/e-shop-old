@@ -279,5 +279,11 @@
       "label": "Status",
       "noStatus": "Do not filter"
     }
+  },
+  "ProductsFiltersForm": {
+    "category": {
+      "label": "Category",
+      "noCategory": "Do not filter"
+    }
   }
 }

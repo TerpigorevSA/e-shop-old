@@ -279,5 +279,11 @@
       "label": "Статус",
       "noStatus": "Не фильтровать"
     }
+  },
+  "ProductsFiltersForm": {
+    "category": {
+      "label": "Категории",
+      "noCategory": "Не фильтровать"
+    }
   }
 }
