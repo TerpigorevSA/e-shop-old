@@ -31,9 +31,7 @@ module.exports = (_, args) => {
     entry: './index.tsx',
     output: {
       path: dist,
-      publicPath:
-        // args.mode === 'development' ? `https://symmetrical-space-trout-r977r77jw693x5qq-2233.app.github.dev/` : undefined /* <- прописать данные своего github */,
-        args.mode === 'development' ? `http://${host}:${port}/` : undefined /* <- прописать данные своего github */,
+      publicPath: args.mode === 'development' ? `http://${host}:${port}/` : 'https://juczken.github.io/e-shop-old/',
       filename: `js/[name].js`,
       chunkFilename: `js/[name].js`,
     },
